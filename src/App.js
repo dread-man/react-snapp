@@ -17,8 +17,10 @@ function App() {
     return (
         <div className={styles.App}>
             <h3>Hello My Dear Friend</h3>
+			{
+				!authState.isAuthorized && <LoginWindow/>
+			}
 			
-			<LoginWindow/>
         </div>
     )
 }
