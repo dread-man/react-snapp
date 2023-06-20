@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { setError, setLoading } from './store.helpers'
 
 export const getApiKey = createAsyncThunk(
     'auth/getApiKey',
     async function (_, { rejectWithValue }) {
-        const url = 'http://16.162.236.210:3001/auth/login-master-password'
+        const url__login__master__password =
+            'http://16.162.236.210:3001/auth/login-master-password'
 
         const requestBody = {
             email: 'davidvorona112@gmail.com',
@@ -20,7 +22,10 @@ export const getApiKey = createAsyncThunk(
         }
 
         try {
-            const response = await fetch(url, requestOptions)
+            const response = await fetch(
+                url__login__master__password,
+                requestOptions
+            )
             if (!response.ok) {
                 throw new Error('Cant get api key')
             }
@@ -32,31 +37,81 @@ export const getApiKey = createAsyncThunk(
     }
 )
 
-const setError = (state) => {
-    state.status = 'rejected'
-}
+export const logIn = createAsyncThunk(
+    'auth/logIn',
+    async function (
+        { userEmail, userCode, apiKey, setAuth },
+        { rejectWithValue, dispatch }
+    ) {
+        try {
+            const url__verify__access__code =
+                'http://16.162.236.210:3001/auth/verify-access-code'
 
-const setLoading = (state) => {
-    state.status = 'loading '
-}
+            const requestBody = {
+                email: userEmail,
+                accessCode: userCode,
+            }
+
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify(requestBody),
+            }
+
+            const response = await fetch(
+                url__verify__access__code,
+                requestOptions
+            )
+            if (!response.ok) {
+                throw new Error('Unauthorized')
+            }
+
+            dispatch(setAuth(true))
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
+    }
+)
 
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
         apiKey: '',
         apiKeyStatus: null,
-    },
-    // reducers: {
 
-    // },
-    extraReducers: {
-        [getApiKey.pending]: setLoading,
-        [getApiKey.fulfilled]: (state, action) => {
-            state.status = 'resolved'
-            state.apiKey = action.payload
+        userEmail: '',
+        userAccessCode: '',
+
+        isAuthorized: false,
+    },
+    reducers: {
+        setUserEmail: (state, action) => {
+            state.userEmail = action.payload
         },
-        [getApiKey.rejected]: setError,
+        setAccessCode: (state, action) => {
+            state.userAccessCode = action.payload
+        },
+        setAuth: (state, action) => {
+            state.isAuthorized = action.payload
+        },
+        setLogOut: (state) => {
+            state.isAuthorized = false
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(getApiKey.pending, setLoading)
+            .addCase(getApiKey.fulfilled, (state, action) => {
+                state.apiKeyStatus = 'resolved'
+                state.apiKey = action.payload
+            })
+            .addCase(getApiKey.rejected, setError)
     },
 })
 
+export const { setUserEmail, setAccessCode, setAuth, setLogOut } =
+    authSlice.actions
 export default authSlice.reducer

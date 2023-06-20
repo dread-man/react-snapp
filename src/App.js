@@ -1,21 +1,24 @@
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './App.module.scss'
-import { useEffect } from 'react'
-import { getApiKey } from './store/storeSlices'
+import { useEffect, useState } from 'react'
+import { getApiKey, setUserEmail } from './store/storeSlices'
+import LoginWindow from './components/LoginWindow/LoginWindow'
 
 function App() {
-	const dispatch = useDispatch()
-    const key = useSelector((state) => state.auth.apiKey)
+    const dispatch = useDispatch()
+    const authState = useSelector((state) => state.auth)
 
-	useEffect(() => {
-		dispatch(getApiKey())
-	}, [])
+    useEffect(() => {
+        dispatch(getApiKey())
+    }, [dispatch])
 
-    console.log(key)
+	console.log(authState.userEmail)
 
     return (
         <div className={styles.App}>
-            <h2>Hello World</h2>
+            <h3>Hello My Dear Friend</h3>
+			
+			<LoginWindow/>
         </div>
     )
 }
