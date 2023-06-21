@@ -6,7 +6,6 @@ import {
     setUserEmail,
     setAccessCode,
     setAuth,
-    setLogOut,
 } from '../../store/storeSlices'
 
 const LoginWindow = () => {
@@ -30,15 +29,8 @@ const LoginWindow = () => {
     }
 
     const handleLogOut = () => {
-        dispatch(setLogOut())
+        
     }
-
-    // const data = {
-    //     userEmail: authState.userEmail,
-    //     userCode: authState.userAccessCode,
-    //     apiKey: authState.apiKey,
-    //     setAuth: setAuth,
-    // }
 
     const data = {
         userEmail: userEmail,
@@ -65,16 +57,7 @@ const LoginWindow = () => {
                     <hr />
                 </div>
             )}
-
-            {authState.isAuthorized && (
-                <div className="">
-                    <h5>{data.userEmail}</h5>
-                    <h5>{data.userAccessCode}</h5>
-
-                    <hr />
-                    <button onClick={handleLogOut}>LogOut</button>
-                </div>
-            )}
+           
         </div>
     )
 }
