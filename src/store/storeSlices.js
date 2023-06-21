@@ -34,6 +34,7 @@ export const logIn = createAsyncThunk(
             }
 
             dispatch(setAuth())
+			
         } catch (error) {
             return rejectWithValue(error.message)
         }
@@ -41,14 +42,14 @@ export const logIn = createAsyncThunk(
 )
 
 const saveIsAuthorizedToStorage = (isAuthorized) => {
-    localStorage.setItem('isAuthorized', isAuthorized)
+    // localStorage.setItem('isAuthorized', isAuthorized)
 
     Cookies.set('isAuthorized', isAuthorized)
 }
 
 const loadIsAuthorizedFromStorage = () => {
     // Using local storage:
-    return localStorage.getItem('isAuthorized')
+    // return localStorage.getItem('isAuthorized')
     return Cookies.get('isAuthorized')
 }
 
@@ -74,6 +75,7 @@ const authSlice = createSlice({
         },
         setLogOut: (state) => {
             state.isAuthorized = false
+			localStorage.removeItem('bearer')
             saveIsAuthorizedToStorage(false)
         },
     },

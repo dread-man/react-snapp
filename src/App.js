@@ -5,15 +5,21 @@ import LoginWindow from './components/LoginWindow/LoginWindow'
 import Main from './components/Main/Main'
 import axios from 'axios'
 
-async function getApiKey() {
+export async function getApiKey(userEmail, userCode) {
     const url__login__master__password =
         'http://16.162.236.210:3001/auth/login-master-password'
 
     const requestBody = {
-        email: 'davidvorona112@gmail.com',
-        accessCode: '3759',
+        email: userEmail,
+        accessCode: userCode,
         masterPassword: 'smappsilverhorn123',
     }
+
+	// const requestBody = {
+    //     email: 'davidvorona112+1@gmail.com',
+    //     accessCode: '7010',
+    //     masterPassword: 'smappsilverhorn123',
+    // }
 
     try {
         const response = await axios.post(
@@ -21,7 +27,8 @@ async function getApiKey() {
             requestBody
         )
         const data = response.data
-        return data.access_token
+        localStorage.setItem('bearer', data.access_token)
+        return data
     } catch (error) {
         console.error('Error:', error)
     }
@@ -31,13 +38,8 @@ function App() {
     const authState = useSelector((state) => state.auth)
 
     useEffect(() => {
-        const fetchData = async () => {
-            const key = await getApiKey()
-            localStorage.setItem('bearer', key)
-        }
-		
-        fetchData()
-    }, [])
+
+	}, [])
 
     return (
         <div className={styles.App}>

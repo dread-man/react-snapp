@@ -17,6 +17,7 @@ const LoginWindow = () => {
     useEffect(() => {
         dispatch(setUserEmail(userEmail))
         dispatch(setAccessCode(userAccessCode))
+
     }, [])
 
     const data = {
@@ -41,6 +42,7 @@ const LoginWindow = () => {
                             value={userEmail}
                             onChange={(e) => {
                                 setUserEmailState(e.target.value)
+								dispatch(setUserEmail(e.target.value))
                             }}
                         ></input>
                         <input
@@ -49,6 +51,7 @@ const LoginWindow = () => {
                             value={userAccessCode}
                             onChange={(e) => {
                                 setUserAccessCodeState(e.target.value)
+								dispatch(setAccessCode(e.target.value))
                             }}
                         ></input>
                         <button
