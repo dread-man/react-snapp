@@ -7,9 +7,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #0d0f26;
+
     .modal {
         form {
-            background-color: gray;
+            background-color: white;
             max-width: 300px;
             display: flex;
             flex-direction: column;
@@ -17,7 +19,17 @@
             gap: 20px;
             color: white;
             padding: 30px;
-        
+			border-radius: 5px;
+
+			header {
+				span {
+					color: black;
+					text-align: center;
+					box-sizing: border-box;
+					font-size: 16px;
+				}
+			}
+
             main {
                 display: flex;
                 flex-direction: column;
@@ -32,4 +44,3 @@
         }
     }
 }
-

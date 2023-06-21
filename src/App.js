@@ -1,30 +1,48 @@
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './App.module.scss'
-import { useEffect, useState } from 'react'
-import { getApiKey, setUserEmail } from './store/storeSlices'
+import { useEffect } from 'react'
 import LoginWindow from './components/LoginWindow/LoginWindow'
-import { setLogOut } from './store/storeSlices'
+import Main from './components/Main/Main'
+import axios from 'axios'
+
+async function getApiKey() {
+    const url__login__master__password =
+        'http://16.162.236.210:3001/auth/login-master-password'
+
+    const requestBody = {
+        email: 'davidvorona112@gmail.com',
+        accessCode: '3759',
+        masterPassword: 'smappsilverhorn123',
+    }
+
+    try {
+        const response = await axios.post(
+            url__login__master__password,
+            requestBody
+        )
+        const data = response.data
+        return data.access_token
+    } catch (error) {
+        console.error('Error:', error)
+    }
+} // get api key
 
 function App() {
-    const dispatch = useDispatch()
     const authState = useSelector((state) => state.auth)
 
     useEffect(() => {
-        dispatch(getApiKey())
-    }, [dispatch])
+        const fetchData = async () => {
+            const key = await getApiKey()
+            localStorage.setItem('bearer', key)
+        }
+		
+        fetchData()
+    }, [])
 
     return (
         <div className={styles.App}>
-            <h3>Hello My Dear Friend</h3>
             {!authState.isAuthorized && <LoginWindow />}
-            {authState.isAuthorized && (
-                <div className="">
-                    <hr />
-                    <button onClick={() => {
-						dispatch(setLogOut())
-					}}>LogOut</button>
-                </div>
-            )}
+            {authState.isAuthorized && <Main />}
         </div>
     )
 }

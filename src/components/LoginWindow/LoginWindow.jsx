@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import styles from "./LoginWindow.module.scss"
 import { useEffect, useState } from "react"
 import {
@@ -10,7 +10,6 @@ import {
 
 const LoginWindow = () => {
     const dispatch = useDispatch()
-    const authState = useSelector((state) => state.auth)
 
     const [userEmail, setUserEmailState] = useState('')
     const [userAccessCode, setUserAccessCodeState] = useState('')
@@ -20,22 +19,10 @@ const LoginWindow = () => {
         dispatch(setAccessCode(userAccessCode))
     }, [])
 
-    const handleEmailChange = (e) => {
-        setUserEmailState(e.target.value)
-    }
-
-    const handleAccessCodeChange = (e) => {
-        setUserAccessCodeState(e.target.value)
-    }
-
-    const handleLogOut = () => {
-        
-    }
-
     const data = {
         userEmail: userEmail,
         userCode: userAccessCode,
-        apiKey: authState.apiKey,
+        apiKey: localStorage.getItem('bearer'),
         setAuth: setAuth,
     }
 
@@ -43,7 +30,6 @@ const LoginWindow = () => {
         <div className={styles.modalOverlay}>
 
             <div className={styles.modal}>
-                {/* <img src="public/img/logo_login"></img> */}
                 <form>
                     <header>
                         <span>Enter your email & access code</span>
@@ -55,7 +41,6 @@ const LoginWindow = () => {
                             value={userEmail}
                             onChange={(e) => {
                                 setUserEmailState(e.target.value)
-                                // console.log(e.target.value)
                             }}
                         ></input>
                         <input
@@ -64,7 +49,6 @@ const LoginWindow = () => {
                             value={userAccessCode}
                             onChange={(e) => {
                                 setUserAccessCodeState(e.target.value)
-                                // console.log(e.target.value)
                             }}
                         ></input>
                         <button

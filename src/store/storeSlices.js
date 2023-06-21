@@ -1,41 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { setError, setLoading } from './store.helpers'
-
-export const getApiKey = createAsyncThunk(
-    'auth/getApiKey',
-    async function (_, { rejectWithValue }) {
-        const url__login__master__password =
-            'http://16.162.236.210:3001/auth/login-master-password'
-
-        const requestBody = {
-            email: 'davidvorona112@gmail.com',
-            accessCode: '3759',
-            masterPassword: 'smappsilverhorn123',
-        }
-
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-        }
-
-        try {
-            const response = await fetch(
-                url__login__master__password,
-                requestOptions
-            )
-            if (!response.ok) {
-                throw new Error('Cant get api key')
-            }
-            const data = response.json()
-            return data
-        } catch (error) {
-            return rejectWithValue(error.message)
-        }
-    }
-)
+import Cookies from 'js-cookie'
 
 export const logIn = createAsyncThunk(
     'auth/logIn',
@@ -76,17 +40,27 @@ export const logIn = createAsyncThunk(
     }
 )
 
+const saveIsAuthorizedToStorage = (isAuthorized) => {
+    localStorage.setItem('isAuthorized', isAuthorized)
+
+    Cookies.set('isAuthorized', isAuthorized)
+}
+
+const loadIsAuthorizedFromStorage = () => {
+    // Using local storage:
+    return localStorage.getItem('isAuthorized')
+    return Cookies.get('isAuthorized')
+}
+
+const initialState = {
+    userEmail: '',
+    userAccessCode: '',
+    isAuthorized: loadIsAuthorizedFromStorage() === 'true',
+}
+
 const authSlice = createSlice({
     name: 'auth',
-    initialState: {
-        apiKey: '',
-        apiKeyStatus: null,
-
-        userEmail: '',
-        userAccessCode: '',
-
-        isAuthorized: false,
-    },
+    initialState,
     reducers: {
         setUserEmail: (state, action) => {
             state.userEmail = action.payload
@@ -96,19 +70,12 @@ const authSlice = createSlice({
         },
         setAuth: (state) => {
             state.isAuthorized = true
+            saveIsAuthorizedToStorage(true)
         },
         setLogOut: (state) => {
             state.isAuthorized = false
+            saveIsAuthorizedToStorage(false)
         },
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(getApiKey.pending, setLoading)
-            .addCase(getApiKey.fulfilled, (state, action) => {
-                state.apiKeyStatus = 'resolved'
-                state.apiKey = action.payload
-            })
-            .addCase(getApiKey.rejected, setError)
     },
 })
 
