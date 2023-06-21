@@ -1,4 +1,4 @@
-import styles from './Main.scss'
+// import styles from './Main.scss'
 import { setLogOut } from '../../store/storeSlices'
 import { useDispatch, useSelector } from 'react-redux'
 import { getConfig, getMe } from '../../store/feed/feedSlices'

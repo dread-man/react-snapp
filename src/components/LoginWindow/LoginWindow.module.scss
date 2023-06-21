@@ -109,6 +109,12 @@
                     border: none;
                     padding: 10px 12px;
                     border-radius: 5px;
+					transition: .3s;
+
+					&:hover {
+						cursor: pointer;
+						background-color: #4f96ff;
+					}
                 }
             }
         }

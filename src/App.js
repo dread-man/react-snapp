@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import styles from './App.module.scss'
 import { useEffect } from 'react'
 import LoginWindow from './components/LoginWindow/LoginWindow'

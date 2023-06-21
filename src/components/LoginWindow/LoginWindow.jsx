@@ -18,7 +18,7 @@ const LoginWindow = () => {
         dispatch(setUserEmail(userEmail))
         dispatch(setAccessCode(userAccessCode))
 
-    }, [])
+    }, [dispatch, userEmail, userAccessCode])
 
     const data = {
         userEmail: userEmail,
