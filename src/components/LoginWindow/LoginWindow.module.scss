@@ -10,35 +10,105 @@
     background-color: #0d0f26;
 
     .modal {
+        // max-width: 360px;
+        width: 360px;
+
+        @media (max-width: 420px) {
+            width: 90%;
+            /* Другие значения для мобильных устройств */
+        }
+
+        img {
+            margin-bottom: 24px;
+        }
+
         form {
+            height: 250px;
             background-color: white;
-            max-width: 300px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
             color: white;
-            padding: 30px;
-			border-radius: 5px;
+            border-radius: 5px;
 
-			header {
-				span {
-					color: black;
-					text-align: center;
-					box-sizing: border-box;
-					font-size: 16px;
-				}
-			}
+
+            header {
+                padding-top: 8px;
+                width: 100%;
+                span {
+                    margin-top: 15px;
+                    color: black;
+                    text-align: center;
+                    box-sizing: border-box;
+                    font-size: 16px;
+                }
+
+                hr {
+                    border: none;
+                    border-top: 1px solid #DBE0E4;
+                }
+            }
 
             main {
                 display: flex;
                 flex-direction: column;
-                gap: 15px;
-                max-width: 300px;
+                max-width: 360px;
                 align-items: center;
+                padding: 16px;
+                
+                label {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 15px;
+                    img {
+                        display: flex;
+                        align-items: center;
+                        padding: 8px 12px;
+                        height: 20px;
+                        width: 20px;
+                        outline: 1px solid #DBE0E4;
+                        border-radius: 5px;
+                        margin: 0;
+                        background-color: #E9ECEF;
+                    }
+                    
+                    input {
+                        display: flex;
+                        align-items: center;
+                        width: 250px;
+                        padding: 10px 12px;
+                        border: none;
+                        outline: 1px solid #DBE0E4;
+                        border-radius: 5px;
+
+                        @media (max-width: 360px) {
+                            width: 90%;
+                            /* Другие значения для мобильных устройств */
+                        }
+
+                        &::placeholder {
+                            font-size: 14px;
+                            color: #E9ECEF;
+                        }
+
+                        &:focus {
+                            border-color: #86b7fe;
+                            outline: 0;
+                            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+                        }
+                    }
+                }
 
                 button {
+                    font-size: 16px;
                     max-width: 80px;
+                    margin-top: 5px;
+                    margin-bottom: 24px;
+                    color: white;
+                    background-color: #0d6efd;
+                    border: none;
+                    padding: 10px 12px;
+                    border-radius: 5px;
                 }
             }
         }
