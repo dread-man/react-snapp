@@ -6,20 +6,31 @@ import {
     setUserEmail,
     setAccessCode,
     setAuth,
-    setLogOut,
-} from "../../store/storeSlices"
+} from '../../store/storeSlices'
 
 const LoginWindow = () => {
     const dispatch = useDispatch()
     const authState = useSelector((state) => state.auth)
 
-    const [userEmail, setUserEmailState] = useState("")
-    const [userAccessCode, setUserAccessCodeState] = useState("")
+    const [userEmail, setUserEmailState] = useState('')
+    const [userAccessCode, setUserAccessCodeState] = useState('')
 
     useEffect(() => {
         dispatch(setUserEmail(userEmail))
         dispatch(setAccessCode(userAccessCode))
     }, [])
+
+    const handleEmailChange = (e) => {
+        setUserEmailState(e.target.value)
+    }
+
+    const handleAccessCodeChange = (e) => {
+        setUserAccessCodeState(e.target.value)
+    }
+
+    const handleLogOut = () => {
+        
+    }
 
     const data = {
         userEmail: userEmail,
