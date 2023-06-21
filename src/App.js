@@ -13,12 +13,14 @@ function App() {
     }, [dispatch])
 
 	console.log(authState.userEmail)
+    console.log(authState.isAuthorized)
 
     return (
         <div className={styles.App}>
-            <h3>Hello My Dear Friend</h3>
+            {/* <h3>Hello My Dear Friend</h3> */}
 			
-			<LoginWindow/>
+			{!authState.isAuthorized && <LoginWindow/>}
+            
         </div>
     )
 }

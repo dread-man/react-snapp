@@ -69,7 +69,7 @@ export const logIn = createAsyncThunk(
                 throw new Error('Unauthorized')
             }
 
-            dispatch(setAuth(true))
+            dispatch(setAuth())
         } catch (error) {
             return rejectWithValue(error.message)
         }
@@ -94,8 +94,8 @@ const authSlice = createSlice({
         setAccessCode: (state, action) => {
             state.userAccessCode = action.payload
         },
-        setAuth: (state, action) => {
-            state.isAuthorized = action.payload
+        setAuth: (state) => {
+            state.isAuthorized = true
         },
         setLogOut: (state) => {
             state.isAuthorized = false

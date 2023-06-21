@@ -1,20 +1,20 @@
-import { useDispatch, useSelector } from 'react-redux'
-import styles from './LoginWindow.module.scss'
-import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import styles from "./LoginWindow.module.scss"
+import { useEffect, useState } from "react"
 import {
     logIn,
     setUserEmail,
     setAccessCode,
     setAuth,
     setLogOut,
-} from '../../store/storeSlices'
+} from "../../store/storeSlices"
 
 const LoginWindow = () => {
     const dispatch = useDispatch()
     const authState = useSelector((state) => state.auth)
 
-	const [userEmail, setUserEmailState] = useState('davidvorona112@gmail.com')
-	const [userAccessCode, setUserAccessCodeState] = useState('3759')
+    const [userEmail, setUserEmailState] = useState("")
+    const [userAccessCode, setUserAccessCodeState] = useState("")
 
     useEffect(() => {
         dispatch(setUserEmail(userEmail))
@@ -22,36 +22,66 @@ const LoginWindow = () => {
     }, [])
 
     const data = {
-        userEmail: authState.userEmail,
-        userCode: authState.userAccessCode,
+        userEmail: userEmail,
+        userCode: userAccessCode,
         apiKey: authState.apiKey,
         setAuth: setAuth,
     }
 
     return (
-        <div>
-            <button
-                onClick={() => {
-                    dispatch(logIn(data))
-                }}
-            >
-                LogIn
-            </button>
-            {authState.isAuthorized && (
-                <div className="">
-                    <h5>{data.userEmail}</h5>
-                    <h5>{data.userAccessCode}</h5>
+        <div className={styles.modalOverlay}>
 
-                    <hr />
-                    <button
-                        onClick={() => {
-                            dispatch(setLogOut())
-                        }}
-                    >
-                        LogOut
-                    </button>
-                </div>
-            )}
+            <div className={styles.modal}>
+                {/* <img src="public/img/logo_login"></img> */}
+                <form>
+                    <header>
+                        <span>Enter your email & access code</span>
+                    </header>
+                    <main>
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            value={userEmail}
+                            onChange={(e) => {
+                                setUserEmailState(e.target.value)
+                                // console.log(e.target.value)
+                            }}
+                        ></input>
+                        <input
+                            type="text"
+                            placeholder="Access Code"
+                            value={userAccessCode}
+                            onChange={(e) => {
+                                setUserAccessCodeState(e.target.value)
+                                // console.log(e.target.value)
+                            }}
+                        ></input>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                dispatch(logIn(data))
+                            }}
+                        >
+                            LogIn
+                        </button>
+                        {/* {authState.isAuthorized && (
+                                <div className="">
+                                    <h5>{data.userEmail}</h5>
+                                    <h5>{data.userAccessCode}</h5>
+
+                                    <hr />
+                                    <button
+                                        onClick={() => {
+                                            dispatch(setLogOut())
+                                        }}
+                                    >
+                                        LogOut
+                                    </button>
+                                </div>
+                            )} */}
+                    </main>
+                </form>
+            </div>
         </div>
     )
 }
