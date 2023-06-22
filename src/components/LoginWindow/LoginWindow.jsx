@@ -14,11 +14,11 @@ const LoginWindow = () => {
     const [userEmail, setUserEmailState] = useState("")
     const [userAccessCode, setUserAccessCodeState] = useState("")
 
-    useEffect(() => {
-        dispatch(setUserEmail(userEmail))
-        dispatch(setAccessCode(userAccessCode))
+    // useEffect(() => {
+    //     dispatch(setUserEmail(userEmail))
+    //     dispatch(setAccessCode(userAccessCode))
 
-    }, [dispatch, userEmail, userAccessCode])
+    // }, [dispatch, userEmail, userAccessCode])
 
     const data = {
         userEmail: userEmail,
@@ -34,7 +34,6 @@ const LoginWindow = () => {
                 <form>
                     <header>
                         <span>Enter your email & access code</span>
-                        <hr />
                     </header>
                     <main>
                         <label>
@@ -56,7 +55,7 @@ const LoginWindow = () => {
                                 alt="Password Img"
                             />
                             <input
-                                type="text"
+                                type="password"
                                 placeholder="Access Code"
                                 value={userAccessCode}
                                 onChange={(e) => {
