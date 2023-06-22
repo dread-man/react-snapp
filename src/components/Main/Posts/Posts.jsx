@@ -1,7 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './Posts.module.scss'
-import { useEffect } from 'react'
-import { getPosts } from '../../../store/feed/feedSlices'
 
 const Posts = () => {
     const dispatch = useDispatch()

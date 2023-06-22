@@ -13,13 +13,7 @@ const LoginWindow = () => {
 
     const [userEmail, setUserEmailState] = useState("")
     const [userAccessCode, setUserAccessCodeState] = useState("")
-
-    // useEffect(() => {
-    //     dispatch(setUserEmail(userEmail))
-    //     dispatch(setAccessCode(userAccessCode))
-
-    // }, [dispatch, userEmail, userAccessCode])
-
+	
     const data = {
         userEmail: userEmail,
         userCode: userAccessCode,

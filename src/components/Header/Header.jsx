@@ -2,22 +2,23 @@ import { useSelector } from 'react-redux'
 import styles from './Header.module.scss'
 import { useDispatch } from 'react-redux'
 import { setLogOut } from '../../store/storeSlices'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Header = () => {
+	
     const dispatch = useDispatch()
     const feedStore = useSelector((state) => state.feed)
     const userName = feedStore.me.name
 
-	const [showDropdown, setShowDropdown] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false)
 
     const handleMouseEnter = () => {
-        setShowDropdown(true);
-    };
+        setShowDropdown(true)
+    }
 
     const handleMouseLeave = () => {
-        setShowDropdown(false);
-    };
+        setShowDropdown(false)
+    }
 
     return (
         <div className={styles.Header}>
@@ -27,7 +28,6 @@ const Header = () => {
             <div className={styles.container}>
                 <span className={styles.text}>Feed</span>
             </div>
-
             <ul className={styles.list}>
                 <li
                     className={styles.text}
@@ -37,15 +37,20 @@ const Header = () => {
                     {userName}
                     {showDropdown && (
                         <ul className={styles.dropdown}>
-                            <li className={styles.textDrop} onClick={() => {
-								dispatch(setLogOut())
-							}}>Logout</li>
+                            <li
+                                className={styles.textDrop}
+                                onClick={() => {
+                                    dispatch(setLogOut())
+                                }}
+                            >
+                                Logout
+                            </li>
                         </ul>
                     )}
                 </li>
             </ul>
         </div>
-    );
+    )
 }
 
 export default Header
