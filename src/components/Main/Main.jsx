@@ -9,23 +9,22 @@ import Posts from './Posts/Posts'
 import { getPosts } from '../../store/feed/feedSlices'
 
 const Main = () => {
-	document.body.style.overflowY = 'scroll'
-
-    const dispatch = useDispatch()
+	const dispatch = useDispatch()
     // const feedStore = useSelector((state) => state.feed)
     const authStore = useSelector((state) => state.auth)
-
+	
     useEffect(() => {
+
         const fetchData = async (userEmail, userCode) => {
             const data = await getApiKey(userEmail, userCode)
             localStorage.setItem('userId', data.id)
         }
-		dispatch(getPosts(4))
-
+		
         const fetchDataAsync = async () => {
             await fetchData(authStore.userEmail, authStore.userAccessCode)
             dispatch(getConfig())
             dispatch(getMe())
+			dispatch(getPosts(4))
         }
 
         if (authStore.userEmail && authStore.userAccessCode) {
@@ -35,11 +34,14 @@ const Main = () => {
             if (savedUserId) {
                 dispatch(getConfig())
                 dispatch(getMe())
+				dispatch(getPosts(4))
             }
         }
     }, [authStore.userEmail, authStore.userAccessCode, dispatch])
 
+
     return (
+
         <div className={styles.main}>
             <Header />
 			<Category/>

@@ -15,12 +15,6 @@ export async function getApiKey(userEmail, userCode) {
         masterPassword: 'smappsilverhorn123',
     }
 
-	// const requestBody = {
-    //     email: 'davidvorona112+1@gmail.com',
-    //     accessCode: '7010',
-    //     masterPassword: 'smappsilverhorn123',
-    // }
-
     try {
         const response = await axios.post(
             url__login__master__password,
@@ -36,10 +30,6 @@ export async function getApiKey(userEmail, userCode) {
 
 function App() {
     const authState = useSelector((state) => state.auth)
-
-    useEffect(() => {
-
-	}, [])
 
     return (
         <div className={styles.App}>
