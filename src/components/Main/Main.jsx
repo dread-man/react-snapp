@@ -13,7 +13,6 @@ const Main = () => {
 	const dispatch = useDispatch()
     // const feedStore = useSelector((state) => state.feed)
     const authStore = useSelector((state) => state.auth)
-
 	
     useEffect(() => {
         const fetchData = async (userEmail, userCode) => {
@@ -40,21 +39,7 @@ const Main = () => {
         }
     }, [authStore.userEmail, authStore.userAccessCode, dispatch])
 
-	useEffect(() => {
-		const checkLocalStorage = (dispatch) => {
-			if (
-				localStorage.getItem('bearer') === null &&
-				localStorage.getItem('userId') === null
-			) {
-				dispatch(setLogOut())
-			}
-		}
-
-		setTimeout(() => {
-			checkLocalStorage(dispatch)
-		}, 1000);
-        
-    }, []) // for check localstorage null
+	
 
     return (
 

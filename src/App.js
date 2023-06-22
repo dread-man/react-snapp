@@ -1,9 +1,10 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import styles from './App.module.scss'
 import { useEffect } from 'react'
 import LoginWindow from './components/LoginWindow/LoginWindow'
 import Main from './components/Main/Main'
 import axios from 'axios'
+import { setLogOut } from './store/storeSlices'
 
 export async function getApiKey(userEmail, userCode) {
     const url__login__master__password =
@@ -29,7 +30,27 @@ export async function getApiKey(userEmail, userCode) {
 } // get api key
 
 function App() {
-    const authState = useSelector((state) => state.auth)
+	const dispatch = useDispatch()
+
+	const authState = useSelector((state) => state.auth)
+
+
+	useEffect(() => {
+		const checkLocalStorage = (dispatch) => {
+			if (
+				localStorage.getItem('bearer') === null &&
+				localStorage.getItem('userId') === null
+			) {
+				dispatch(setLogOut())
+			}
+		}
+	
+		setTimeout(() => {
+			checkLocalStorage(dispatch)
+		}, 1000);
+		
+	}, []) // for check localstorage null
+
 
     return (
         <div className={styles.App}>
