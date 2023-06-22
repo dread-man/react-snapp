@@ -1,0 +1,30 @@
+
+.category {
+	display: flex;
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 10px;
+
+	.active {
+		// font-size: 18px;
+		color: black;
+		cursor: pointer;
+	}
+
+	span {
+		padding: 8px 16px;
+		font-weight: 700;
+		transition: 0.25s;
+		color: #dbdbdb;
+		font-size: 18px;
+
+
+		&:hover {
+			color: black;
+			cursor: pointer;
+		}
+	}
+}
+

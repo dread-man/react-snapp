@@ -1,0 +1,47 @@
+.posts {
+	width: 50%;
+	margin: 0 auto;
+
+	.post {
+		padding: 8px 15px;
+		box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		row-gap: 20px;
+		margin: 40px 0px;
+		transition: .3s;
+
+		&:hover {
+			cursor: pointer;
+			box-shadow: 0 0.27rem 0.9rem rgba(0, 0, 0, 0.125);
+		}
+
+		h3 {
+			margin-bottom: 10px;
+			
+		}
+		span {
+			font-size: 18px;
+		}
+	}
+
+	.user {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+		align-items: center;
+
+		.userName {
+			font-size: 20px;
+			color: #dbdbdb;
+		}
+
+		.stats {
+			display: flex;
+			gap: 10px;
+			color: #dbdbdb;
+		}
+	}
+}
+
