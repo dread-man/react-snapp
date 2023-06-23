@@ -55,42 +55,80 @@ export const getMe = createAsyncThunk(
 export const getPosts = createAsyncThunk(
     'feed/getPosts',
     async function (value, { rejectWithValue }) {
-		const url__post = 'http://16.162.236.210:3001/post';
 
-            const params = new URLSearchParams({
-                categoryId: value,
-            });
+        const url__post = 'http://16.162.236.210:3001/post'
 
-            const requestOptions = {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('bearer')}`,
-                },
-            };
+        const params = new URLSearchParams({
+            categoryId: value,
+        })
+
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
+            },
+        }
         try {
-			if(value === 999) {
-				const response = await fetch(url__post, requestOptions)
-				if(!response.ok) {
-					throw new Error('Error post')
-				}
-				const data = response.json()
-				return data
-
-			}
-            
-            const response = await fetch(`${url__post}?${params.toString()}`, requestOptions);
-            if (!response.ok) {
-                throw new Error('Error post');
+            if (value === 999) {
+                const response = await fetch(url__post, requestOptions)
+                if (!response.ok) {
+                    throw new Error('Error post')
+                }
+                const data = response.json()
+                return data
             }
 
-            const data = response.json();
-            return data;
+            const response = await fetch(
+                `${url__post}?${params.toString()}`,
+                requestOptions
+            )
+            if (!response.ok) {
+                throw new Error('Error post')
+            }
+
+            const data = response.json()
+            return data
         } catch (error) {
-            return rejectWithValue(error.message);
+            return rejectWithValue(error.message)
         }
     }
-);
+)
+
+export const getPostsByPage = createAsyncThunk(
+    'feed/getPostsByPage',
+    async function ({ categoryId, page }, { rejectWithValue, dispatch }) {
+        const url__post = 'http://16.162.236.210:3001/post'
+
+        const params = new URLSearchParams({
+            page: page,
+            categoryId: categoryId,
+        })
+
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
+            },
+        }
+
+        try {
+            const response = await fetch(
+                `${url__post}?${params.toString()}`,
+                requestOptions
+            )
+            if (!response.ok) {
+                throw new Error('Error post with page')
+            }
+            const data = response.json()
+			return data
+
+        } catch (error) {
+            rejectWithValue(error.message)
+        }
+    }
+)
 
 const feedSlice = createSlice({
     name: 'feed',
@@ -98,8 +136,18 @@ const feedSlice = createSlice({
         config: '',
         me: '',
         posts: '',
+
+		categoryId: null,
+		page: 2,
     },
-    reducers: {},
+    reducers: {
+		setCategoryId: (state, action) => {
+			state.categoryId = action.payload
+		},
+		setPage: (state, action) => {
+			state.page = action.payload
+		}
+	},
     extraReducers: {
         [getConfig.fulfilled]: (state, action) => {
             state.config = action.payload.categories
@@ -110,8 +158,20 @@ const feedSlice = createSlice({
         [getPosts.fulfilled]: (state, action) => {
             state.posts = action.payload.items
         },
+		[getPostsByPage.fulfilled]: (state, action) => {
+			if(state.categoryId === 1 && state.page >= 4) {
+				state.categoryId = null
+				state.page = null
+			}
+			if(state.categoryId === 4 && state.page >= 18) {
+				state.categoryId = null
+				state.page = null
+			}
+
+			state.posts = [...state.posts, ...action.payload.items]
+		}
     },
 })
 
-// export const { } = feedSlice.actions
+export const { setCategoryId, setPage} = feedSlice.actions
 export default feedSlice.reducer

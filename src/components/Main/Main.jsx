@@ -39,7 +39,6 @@ const Main = () => {
         }
     }, [authStore.userEmail, authStore.userAccessCode, dispatch])
 
-	
 
     return (
 
