@@ -13,9 +13,8 @@ const Category = () => {
     const handleSpanClick = (index, item) => {
         setActiveSpan(index)
         dispatch(getPosts(item.id)) // set post category
-		dispatch(setCategoryId(item.id))
-		dispatch(setPage(2))
-		console.log('onclick ' + item.id)
+        dispatch(setCategoryId(item.id))
+        dispatch(setPage(2))
     }
 
     const renderedArray = [

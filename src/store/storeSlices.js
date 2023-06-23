@@ -57,6 +57,8 @@ const initialState = {
     userEmail: '',
     userAccessCode: '',
     isAuthorized: loadIsAuthorizedFromStorage() === 'true',
+
+	headerName: '',
 }
 
 const authSlice = createSlice({
@@ -78,9 +80,12 @@ const authSlice = createSlice({
 			localStorage.removeItem('bearer')
             saveIsAuthorizedToStorage(false)
         },
+		setHeaderName: (state, action) => {
+			state.headerName = action.payload
+		},
     },
 })
 
-export const { setUserEmail, setAccessCode, setAuth, setLogOut } =
+export const { setUserEmail, setAccessCode, setAuth, setLogOut, setHeaderName } =
     authSlice.actions
 export default authSlice.reducer

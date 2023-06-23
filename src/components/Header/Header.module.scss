@@ -9,20 +9,20 @@
     background-color: #f8f9fa;
     padding: 0px 20px;
 
-	img {
-		width: 250px;
-		height: 20px;
-	}
+    img {
+        width: 250px;
+        height: 20px;
+    }
 
     .text {
-		font-size: 24px;
+        font-size: 24px;
         margin: 0 10px;
     }
 
     .container {
-		position: relative;
-		width: 50%;
-		display: flex;
+        position: relative;
+        width: 50%;
+        display: flex;
     }
 }
 
@@ -40,14 +40,18 @@
 .dropdown {
     list-style: none;
     position: absolute;
-	width: 70%;
+    width: 70%;
     top: 100%;
-	right: 0;
+    right: 0;
     background-color: #fff;
-	border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     display: none;
-	border-radius: 0.25rem;
-	color: #6c757d;
+    border-radius: 0.25rem;
+    color: #6c757d;
+
+    .link {
+        all: unset;
+    }
 }
 
 .list li:hover .dropdown {
@@ -55,17 +59,16 @@
 }
 
 .dropdown li {
-	transition: .3s;
-	padding: 10px;
-	padding-left: 20px;
-	text-align: left;
-	
+    transition: 0.3s;
+    padding: 10px;
+    padding-left: 20px;
+    text-align: left;
 
-	&:hover {
-		background-color:#E6E6E6;
-	}
+    &:hover {
+        background-color: #e6e6e6;
+    }
 }
 
 .textDrop {
-	font-size: 17px;
+    font-size: 17px;
 }

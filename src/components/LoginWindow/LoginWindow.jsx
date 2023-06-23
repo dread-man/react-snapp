@@ -1,23 +1,23 @@
-import { useDispatch } from "react-redux"
-import styles from "./LoginWindow.module.scss"
-import { useEffect, useState } from "react"
+import { useDispatch } from 'react-redux'
+import styles from './LoginWindow.module.scss'
+import { useEffect, useState } from 'react'
 import {
     logIn,
     setUserEmail,
     setAccessCode,
     setAuth,
-} from "../../store/storeSlices"
+} from '../../store/storeSlices'
 
 const LoginWindow = () => {
     const dispatch = useDispatch()
 
-    const [userEmail, setUserEmailState] = useState("")
-    const [userAccessCode, setUserAccessCodeState] = useState("")
-	
+    const [userEmail, setUserEmailState] = useState('')
+    const [userAccessCode, setUserAccessCodeState] = useState('')
+
     const data = {
         userEmail: userEmail,
         userCode: userAccessCode,
-        apiKey: localStorage.getItem("bearer"),
+        apiKey: localStorage.getItem('bearer'),
         setAuth: setAuth,
     }
 
@@ -38,7 +38,7 @@ const LoginWindow = () => {
                                 value={userEmail}
                                 onChange={(e) => {
                                     setUserEmailState(e.target.value)
-									dispatch(setUserEmail(e.target.value))
+                                    dispatch(setUserEmail(e.target.value))
                                 }}
                             ></input>
                         </label>
@@ -54,10 +54,11 @@ const LoginWindow = () => {
                                 value={userAccessCode}
                                 onChange={(e) => {
                                     setUserAccessCodeState(e.target.value)
-									dispatch(setAccessCode(e.target.value))
+                                    dispatch(setAccessCode(e.target.value))
                                 }}
                             ></input>
                         </label>
+
                         <button
                             onClick={(e) => {
                                 e.preventDefault()

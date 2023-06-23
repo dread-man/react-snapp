@@ -7,24 +7,27 @@ import Header from '../Header/Header'
 import Category from './Category/Category'
 import Posts from './Posts/Posts'
 import { getPosts } from '../../store/feed/feedSlices'
-import { setLogOut } from '../../store/storeSlices'
+import { setHeaderName, setLogOut } from '../../store/storeSlices'
 
 const Main = () => {
-	const dispatch = useDispatch()
+    const dispatch = useDispatch()
     // const feedStore = useSelector((state) => state.feed)
     const authStore = useSelector((state) => state.auth)
-	
+    localStorage.removeItem('postId')
+
     useEffect(() => {
+        dispatch(setHeaderName('Feed'))
         const fetchData = async (userEmail, userCode) => {
             const data = await getApiKey(userEmail, userCode)
             localStorage.setItem('userId', data.id)
         }
-		
+
         const fetchDataAsync = async () => {
             await fetchData(authStore.userEmail, authStore.userAccessCode)
             dispatch(getConfig())
             dispatch(getMe())
-			dispatch(getPosts(4))
+
+            dispatch(getPosts(999))
         }
 
         if (authStore.userEmail && authStore.userAccessCode) {
@@ -34,17 +37,22 @@ const Main = () => {
             if (savedUserId) {
                 dispatch(getConfig())
                 dispatch(getMe())
-				dispatch(getPosts(4))
+
+                dispatch(getPosts(999))
             }
         }
-    }, [authStore.userEmail, authStore.userAccessCode, dispatch])
+    }, [
+        authStore.userEmail,
+        authStore.userAccessCode,
+        authStore.headerName,
+        dispatch,
+    ])
 
     return (
-
         <div className={styles.main}>
             <Header />
-			<Category/>
-			<Posts/>
+            <Category />
+            <Posts />
         </div>
     )
 }

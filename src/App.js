@@ -5,6 +5,8 @@ import LoginWindow from './components/LoginWindow/LoginWindow'
 import Main from './components/Main/Main'
 import axios from 'axios'
 import { setLogOut } from './store/storeSlices'
+import { Route, Routes } from 'react-router-dom'
+import Insider from './components/Insider/Insider'
 
 export async function getApiKey(userEmail, userCode) {
     const url__login__master__password =
@@ -51,8 +53,27 @@ function App() {
 
     return (
         <div className={styles.App}>
-            {!authState.isAuthorized && <LoginWindow />}
-            {authState.isAuthorized && <Main />}
+            <Routes>
+                <Route
+                    path="/"
+                    exact
+                    element={
+                        <>
+                            {!authState.isAuthorized && <LoginWindow />}
+                            {authState.isAuthorized && <Main />}
+                        </>
+                    }
+                />
+
+                <Route
+                    path="/insider"
+                    element={
+                        <>	
+                            <Insider/>
+                        </>
+                    }
+                />
+            </Routes>
         </div>
     )
 }

@@ -55,7 +55,6 @@ export const getMe = createAsyncThunk(
 export const getPosts = createAsyncThunk(
     'feed/getPosts',
     async function (value, { rejectWithValue }) {
-
         const url__post = 'http://16.162.236.210:3001/post'
 
         const params = new URLSearchParams({
@@ -119,11 +118,37 @@ export const getPostsByPage = createAsyncThunk(
                 requestOptions
             )
             if (!response.ok) {
-                throw new Error('Error post with page')
+                throw new Error('Error post by page')
             }
             const data = response.json()
-			return data
+            return data
+        } catch (error) {
+            rejectWithValue(error.message)
+        }
+    }
+)
 
+export const getPostById = createAsyncThunk(
+    'feed/getPostById',
+    async function (value, { rejectWithValue }) {
+        const url__post__value = `http://16.162.236.210:3001/post/${value}`
+
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
+            },
+        }
+
+        try {
+            const response = await fetch(url__post__value, requestOptions)
+            if (!response.ok) {
+                throw new Error('Error post by id')
+            }
+
+            const data = response.json()
+            return data
         } catch (error) {
             rejectWithValue(error.message)
         }
@@ -137,17 +162,23 @@ const feedSlice = createSlice({
         me: '',
         posts: '',
 
-		categoryId: null,
-		page: 2,
+        categoryId: null,
+        page: 2,
+
+        postId: null,
+		postIdRender: {},
     },
     reducers: {
-		setCategoryId: (state, action) => {
-			state.categoryId = action.payload
-		},
-		setPage: (state, action) => {
-			state.page = action.payload
-		}
-	},
+        setCategoryId: (state, action) => {
+            state.categoryId = action.payload
+        },
+        setPage: (state, action) => {
+            state.page = action.payload
+        },
+        setPostId: (state, action) => {
+            state.postId = action.payload
+        },
+    },
     extraReducers: {
         [getConfig.fulfilled]: (state, action) => {
             state.config = action.payload.categories
@@ -158,19 +189,24 @@ const feedSlice = createSlice({
         [getPosts.fulfilled]: (state, action) => {
             state.posts = action.payload.items
         },
-		[getPostsByPage.fulfilled]: (state, action) => {
-			if(state.categoryId === 1 && state.page >= 4) {
-				state.categoryId = null
-				state.page = null
-			}
-			if(state.categoryId === 4 && state.page >= 18) {
-				state.categoryId = null
-				state.page = null
-			}
-			state.posts = [...state.posts, ...action.payload.items]
+        [getPostsByPage.fulfilled]: (state, action) => {
+            if (state.categoryId === 1 && state.page >= 4) {
+                state.categoryId = null
+                state.page = null
+            }
+            if (state.categoryId === 4 && state.page >= 18) {
+                state.categoryId = null
+                state.page = null
+            }
+            state.posts = [...state.posts, ...action.payload.items]
+        },
+
+		[getPostById.fulfilled]: (state, action) => {
+			state.postIdRender = action.payload
 		}
+
     },
 })
 
-export const { setCategoryId, setPage} = feedSlice.actions
+export const { setCategoryId, setPage, setPostId } = feedSlice.actions
 export default feedSlice.reducer
