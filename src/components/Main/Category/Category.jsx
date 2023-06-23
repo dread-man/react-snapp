@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import feedSlices, { getPosts } from '../../../store/feed/feedSlices'
 import { setCategoryId, setPage } from '../../../store/feed/feedSlices'
 
-
 const Category = () => {
     const dispatch = useDispatch()
     const feedStore = useSelector((state) => state.feed)

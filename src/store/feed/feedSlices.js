@@ -167,7 +167,6 @@ const feedSlice = createSlice({
 				state.categoryId = null
 				state.page = null
 			}
-
 			state.posts = [...state.posts, ...action.payload.items]
 		}
     },

@@ -30,27 +30,24 @@ export async function getApiKey(userEmail, userCode) {
 } // get api key
 
 function App() {
-	const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-	const authState = useSelector((state) => state.auth)
+    const authState = useSelector((state) => state.auth)
 
+    useEffect(() => {
+        const checkLocalStorage = (dispatch) => {
+            if (
+                localStorage.getItem('bearer') === null &&
+                localStorage.getItem('userId') === null
+            ) {
+                dispatch(setLogOut())
+            }
+        }
 
-	useEffect(() => {
-		const checkLocalStorage = (dispatch) => {
-			if (
-				localStorage.getItem('bearer') === null &&
-				localStorage.getItem('userId') === null
-			) {
-				dispatch(setLogOut())
-			}
-		}
-	
-		setTimeout(() => {
-			checkLocalStorage(dispatch)
-		}, 1000);
-		
-	}, []) // for check localstorage null
-
+        setTimeout(() => {
+            checkLocalStorage(dispatch)
+        }, 1000)
+    }, []) // for check localstorage null
 
     return (
         <div className={styles.App}>

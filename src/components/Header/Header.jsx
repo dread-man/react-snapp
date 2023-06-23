@@ -5,7 +5,6 @@ import { setLogOut } from '../../store/storeSlices'
 import { useEffect, useState } from 'react'
 
 const Header = () => {
-	
     const dispatch = useDispatch()
     const feedStore = useSelector((state) => state.feed)
     const userName = feedStore.me.name
@@ -19,8 +18,6 @@ const Header = () => {
     const handleMouseLeave = () => {
         setShowDropdown(false)
     }
-
-	
 
     return (
         <div className={styles.Header}>
