@@ -33,7 +33,6 @@ export async function getApiKey(userEmail, userCode) {
 
 function App() {
     const dispatch = useDispatch()
-
     const authState = useSelector((state) => state.auth)
 
     useEffect(() => {

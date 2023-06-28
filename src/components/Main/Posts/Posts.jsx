@@ -64,11 +64,10 @@ const Posts = () => {
                     <Link
                         key={index}
                         to="/insider"
-						className={styles.link}
+                        className={styles.link}
                         onClick={() => {
-							
                             dispatch(setPostId(item.id))
-							localStorage.setItem('postId', item.id);
+                            localStorage.setItem('postId', item.id)
                         }}
                     >
                         <div className={styles.post}>
