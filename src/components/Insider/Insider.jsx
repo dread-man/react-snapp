@@ -3,9 +3,15 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './Insider.module.scss'
 import { getApiKey } from '../../App'
-import { getMe, setPostId, getPostById } from '../../store/feed/feedSlices'
+import {
+    getMe,
+    setPostId,
+    getPostById,
+    getCommentsByPostId,
+} from '../../store/feed/feedSlices'
 import Header from '../Header/Header'
 import { setHeaderName } from '../../store/storeSlices'
+import User from './User/User'
 
 const Insider = () => {
     const dispatch = useDispatch()
@@ -42,10 +48,13 @@ const Insider = () => {
         }
 
         dispatch(getPostById(savedPostId))
+        dispatch(getCommentsByPostId(savedPostId))
     }, [authStore.userEmail, authStore.userAccessCode, dispatch])
 
     const postIdRender = feedStore.postIdRender
-    console.log(postIdRender.content)
+    const postComments = feedStore.postComments
+    // console.log(postIdRender)
+    // console.log(postComments)
 
     let tags = []
     if (postIdRender.tags) {
@@ -63,19 +72,8 @@ const Insider = () => {
         ? ''
         : new Date(postIdRender.createdAt).toISOString().split('T')[0]
 
-
-	const contentRef = useRef(null);
-	const htmlContent = postIdRender.content;
-  
-	useEffect(() => {
-	  if (contentRef.current) {
-		const videoElement = contentRef.current.querySelector('video');
-		if (videoElement) {
-		  videoElement.play();
-		}
-	  }
-	}, []);
-
+    const contentRef = useRef(null)
+    const htmlContent = postIdRender.content
 
     return (
         <div className={styles.insider}>
@@ -103,11 +101,146 @@ const Insider = () => {
                         <span>{isLiked ? 1 : 0}</span>
                     </div>
                 </div>
-				 <div className={styles.content} ref={contentRef} dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
+                <div
+                    className={styles.content}
+                    ref={contentRef}
+                    dangerouslySetInnerHTML={{ __html: htmlContent }}
+                ></div>
                 <div className={styles.commentContainer}>
                     <input type="text" placeholder="Add a comment" />
                     <button>Send</button>
                 </div>
+
+                {postComments && (
+                    <div className={styles.comments}>
+                        <span className={styles.title}>Comments</span>
+                        {postComments &&
+                            postComments.map((item, index) => (
+                                <div key={index}>
+                                    <div
+                                        className={styles.userContainerComment}
+                                    >
+                                        <div
+                                            className={
+                                                styles.infoContainerComment
+                                            }
+                                        >
+                                            <div
+                                                className={styles.avatarComment}
+                                            ></div>
+                                            <div className={styles.nameAndData}>
+                                                <h3
+                                                    className={
+                                                        styles.userNameComment
+                                                    }
+                                                >
+                                                    {item.user.name}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        {<User value={item.content} />}
+                                        <div className={styles.replyContainer}>
+                                            <h3 className={styles.data}>
+                                                {postIdRender.createdAt
+                                                    ? new Date(
+                                                          postIdRender.createdAt
+                                                      )
+                                                          .toISOString()
+                                                          .split('T')[0]
+                                                    : ''}
+                                            </h3>
+
+                                            <button
+                                                className={styles.commentReply}
+                                            >
+                                                Reply
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {item.children &&
+                                        item.children.map((child, index) => {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className={
+                                                        styles.childrenContainer
+                                                    }
+                                                >
+                                                    <div
+                                                        className={
+                                                            styles.userContainerComment
+                                                        }
+                                                    >
+                                                        <div
+                                                            className={
+                                                                styles.infoContainerComment
+                                                            }
+                                                        >
+                                                            <div
+                                                                className={
+                                                                    styles.avatarComment
+                                                                }
+                                                            ></div>
+                                                            <div
+                                                                className={
+                                                                    styles.nameAndData
+                                                                }
+                                                            >
+                                                                <h3
+                                                                    className={
+                                                                        styles.userNameComment
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        child
+                                                                            .user
+                                                                            .name
+                                                                    }
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                        <User
+                                                            value={
+                                                                child.content
+                                                            }
+                                                        />
+                                                        <div
+                                                            className={
+                                                                styles.replyContainer
+                                                            }
+                                                        >
+                                                            <h3
+                                                                className={
+                                                                    styles.data
+                                                                }
+                                                            >
+                                                                {postIdRender.createdAt
+                                                                    ? new Date(
+                                                                          child.createdAt
+                                                                      )
+                                                                          .toISOString()
+                                                                          .split(
+                                                                              'T'
+                                                                          )[0]
+                                                                    : ''}
+                                                            </h3>
+
+                                                            <button
+                                                                className={
+                                                                    styles.commentReply
+                                                                }
+                                                            >
+                                                                Reply
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                </div>
+                            ))}
+                    </div>
+                )}
             </div>
         </div>
     )

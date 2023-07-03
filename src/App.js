@@ -7,6 +7,7 @@ import axios from 'axios'
 import { setLogOut } from './store/storeSlices'
 import { Route, Routes } from 'react-router-dom'
 import Insider from './components/Insider/Insider'
+import Profile from './components/Profile/Profile'
 
 export async function getApiKey(userEmail, userCode) {
     const url__login__master__password =
@@ -17,6 +18,8 @@ export async function getApiKey(userEmail, userCode) {
         accessCode: userCode,
         masterPassword: 'smappsilverhorn123',
     }
+
+    const obh2 = {}
 
     try {
         const response = await axios.post(
@@ -67,8 +70,17 @@ function App() {
                 <Route
                     path="/insider"
                     element={
-                        <>	
-                            <Insider/>
+                        <>
+                            <Insider />
+                        </>
+                    }
+                />
+
+                <Route
+                    path="/profile"
+                    element={
+                        <>
+                            <Profile/>
                         </>
                     }
                 />

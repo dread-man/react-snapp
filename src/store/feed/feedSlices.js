@@ -155,6 +155,33 @@ export const getPostById = createAsyncThunk(
     }
 )
 
+export const getCommentsByPostId = createAsyncThunk(
+    'feed/getCommentsByPostId',
+    async function (postId, { rejectWithValue }) {
+        const url__comment = `http://16.162.236.210:3001/comment/?postId=${postId}`
+
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
+            },
+        }
+
+        try {
+            const response = await fetch(url__comment, requestOptions)
+            if (!response.ok) {
+                throw new Error('Error post by id')
+            }
+
+            const data = response.json()
+            return data
+        } catch (error) {
+            rejectWithValue(error.message)
+        }
+    }
+)
+
 const feedSlice = createSlice({
     name: 'feed',
     initialState: {
@@ -166,7 +193,9 @@ const feedSlice = createSlice({
         page: 2,
 
         postId: null,
-		postIdRender: {},
+        postIdRender: {},
+
+		postComments: null
     },
     reducers: {
         setCategoryId: (state, action) => {
@@ -201,10 +230,12 @@ const feedSlice = createSlice({
             state.posts = [...state.posts, ...action.payload.items]
         },
 
-		[getPostById.fulfilled]: (state, action) => {
-			state.postIdRender = action.payload
+        [getPostById.fulfilled]: (state, action) => {
+            state.postIdRender = action.payload
+        },
+		[getCommentsByPostId.fulfilled]: (state, action) => {
+			state.postComments = [...action.payload.items]
 		}
-
     },
 })
 
