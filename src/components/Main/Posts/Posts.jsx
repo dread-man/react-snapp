@@ -59,6 +59,15 @@ const Posts = () => {
 
     return (
         <div className={styles.posts}>
+            {renderedArray.length <= 0 && (
+                <div className={styles.storyContainer}>
+                    <span>
+                        No stories are shared yet :( Maybe you could{' '}
+                        <a href="">write a new story</a> now
+                    </span>
+                </div>
+            )}
+
             {renderedArray.map((item, index) => {
                 return (
                     <Link

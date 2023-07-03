@@ -33,10 +33,12 @@ const Category = () => {
 
     useEffect(() => {
         const initialActiveIndex = renderedArray.findIndex(
-            (item) => item.name === 'Latest'
+            (item) => item.id == sessionStorage.getItem('categoryId')
         )
         setActiveSpan(initialActiveIndex)
-    }, [])
+    }, [renderedArray])
+
+    // console.log(renderedArray)
 
     return (
         <div className={styles.category}>
@@ -49,6 +51,8 @@ const Category = () => {
                             className={spanClass}
                             onClick={() => {
                                 handleSpanClick(index, item)
+                                sessionStorage.setItem('categoryId', item.id)
+                                console.log(item.id)
                             }}
                         >
                             {item.name}

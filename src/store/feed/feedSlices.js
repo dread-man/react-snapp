@@ -69,7 +69,7 @@ export const getPosts = createAsyncThunk(
             },
         }
         try {
-            if (value === 999) {
+            if (value == 999) {
                 const response = await fetch(url__post, requestOptions)
                 if (!response.ok) {
                     throw new Error('Error post')
@@ -182,6 +182,33 @@ export const getCommentsByPostId = createAsyncThunk(
     }
 )
 
+export const getVideChat = createAsyncThunk(
+	'feed/getVideoChat',
+	async function (_, { rejectWithValue }) {
+		const url__video__chat = 'http://16.162.236.210:3001/video-chat'
+
+		const requestOptions = {
+			method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
+            },
+		}
+
+		try {
+            const response = await fetch(url__video__chat, requestOptions)
+            if (!response.ok) {
+                throw new Error('Error video chat')
+            }
+
+            const data = response.json()
+            return data
+        } catch (error) {
+            rejectWithValue(error.message)
+        }
+	}
+)
+
 const feedSlice = createSlice({
     name: 'feed',
     initialState: {
@@ -189,13 +216,15 @@ const feedSlice = createSlice({
         me: '',
         posts: '',
 
-        categoryId: null,
+        categoryId: sessionStorage.getItem('categoryId'),
         page: 2,
 
         postId: null,
         postIdRender: {},
 
-		postComments: null
+		postComments: null,
+
+		videoData: null,
     },
     reducers: {
         setCategoryId: (state, action) => {
@@ -235,6 +264,9 @@ const feedSlice = createSlice({
         },
 		[getCommentsByPostId.fulfilled]: (state, action) => {
 			state.postComments = [...action.payload.items]
+		},
+		[getVideChat.fulfilled]: (state, action) => {
+			state.videoData = action.payload
 		}
     },
 })

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import styles from './LoginWindow.module.scss'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
     logIn,
     setUserEmail,
@@ -9,6 +9,8 @@ import {
 } from '../../store/storeSlices'
 
 const LoginWindow = () => {
+	document.body.style.overflowY = 'auto'
+
     const dispatch = useDispatch()
 
     const [userEmail, setUserEmailState] = useState('')

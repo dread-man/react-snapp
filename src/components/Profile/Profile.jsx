@@ -1,15 +1,19 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Header from '../Header/Header'
+import styles from './Profile.module.scss'
 import { setHeaderName } from '../../store/storeSlices'
 import { getMe } from '../../store/feed/feedSlices'
 import { getApiKey } from '../../App'
+import { getUserProfile } from '../../store/user/userSlice'
 
-
-const Profile = () => {	
+const Profile = () => {
     const dispatch = useDispatch()
-    const feedStore = useSelector((state) => state.feed)
     const authStore = useSelector((state) => state.auth)
+    const userStore = useSelector((state) => state.user)
+
+    const userId = sessionStorage.getItem('userId')
+    const userData = userStore.userData
 
     useEffect(() => {
         dispatch(setHeaderName('Profile'))
@@ -32,12 +36,22 @@ const Profile = () => {
                 dispatch(getMe())
             }
         }
+
+        dispatch(getUserProfile(userId))
     }, [])
 
     return (
         <div>
             <Header />
-            <h2>Profiles</h2>
+            <div className={styles.userAvatar}></div>
+            {userData && (
+                <div>
+                    <h3 className={styles.userName}>{userData.name}</h3>
+                    <div className={styles.bio}>
+						{userData.bio}
+					</div>
+                </div>
+            )}
         </div>
     )
 }

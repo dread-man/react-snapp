@@ -1,17 +1,20 @@
-import styles from './Main.scss'
+import styles from './Main.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { getConfig, getMe } from '../../store/feed/feedSlices'
+import feedSlices, { getConfig, getMe } from '../../store/feed/feedSlices'
 import { useEffect } from 'react'
 import { getApiKey } from '../../App'
 import Header from '../Header/Header'
 import Category from './Category/Category'
 import Posts from './Posts/Posts'
-import { getPosts } from '../../store/feed/feedSlices'
+import { getPosts, getVideChat } from '../../store/feed/feedSlices'
 import { setHeaderName, setLogOut } from '../../store/storeSlices'
+import VideoWindow from './VideoWindow/VideoWindow'
 
 const Main = () => {
     const dispatch = useDispatch()
-    // const feedStore = useSelector((state) => state.feed)
+    document.body.style.overflowY = 'scroll'
+
+    const feedStore = useSelector((state) => state.feed)
     const authStore = useSelector((state) => state.auth)
     localStorage.removeItem('postId')
 
@@ -26,8 +29,8 @@ const Main = () => {
             await fetchData(authStore.userEmail, authStore.userAccessCode)
             dispatch(getConfig())
             dispatch(getMe())
-
-            dispatch(getPosts(999))
+			dispatch(getVideChat())
+            dispatch(getPosts(sessionStorage.getItem('categoryId')))
         }
 
         if (authStore.userEmail && authStore.userAccessCode) {
@@ -37,10 +40,11 @@ const Main = () => {
             if (savedUserId) {
                 dispatch(getConfig())
                 dispatch(getMe())
-
-                dispatch(getPosts(999))
+				dispatch(getVideChat())
+                dispatch(getPosts(sessionStorage.getItem('categoryId')))
             }
         }
+
     }, [
         authStore.userEmail,
         authStore.userAccessCode,
@@ -49,11 +53,12 @@ const Main = () => {
     ])
 
     return (
-        <div className={styles.main}>
+        <main className={styles.main}>
             <Header />
             <Category />
             <Posts />
-        </div>
+            <VideoWindow />
+        </main>
     )
 }
 

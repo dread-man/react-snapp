@@ -14,9 +14,12 @@ import { setHeaderName } from '../../store/storeSlices'
 import User from './User/User'
 
 const Insider = () => {
+	window.scrollTo(0, 0)
     const dispatch = useDispatch()
     const feedStore = useSelector((state) => state.feed)
     const authStore = useSelector((state) => state.auth)
+
+	sessionStorage.removeItem('userId')
 
     const [isLiked, setIsLiked] = useState(false)
 
