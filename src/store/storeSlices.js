@@ -33,25 +33,20 @@ export const logIn = createAsyncThunk(
                 throw new Error('Unauthorized')
             }
 
-			dispatch(setErrorMessage(false))
+            dispatch(setErrorMessage(false))
             dispatch(setAuth())
-			
         } catch (error) {
-			dispatch(setErrorMessage(true))
+            dispatch(setErrorMessage(true))
             return rejectWithValue(error.message)
         }
     }
 )
 
 const saveIsAuthorizedToStorage = (isAuthorized) => {
-    // localStorage.setItem('isAuthorized', isAuthorized)
-
     Cookies.set('isAuthorized', isAuthorized)
 }
 
 const loadIsAuthorizedFromStorage = () => {
-    // Using local storage:
-    // return localStorage.getItem('isAuthorized')
     return Cookies.get('isAuthorized')
 }
 
@@ -60,8 +55,8 @@ const initialState = {
     userAccessCode: '',
     isAuthorized: loadIsAuthorizedFromStorage() === 'true',
 
-	headerName: '',
-	errorMessage: false
+    headerName: '',
+    errorMessage: false,
 }
 
 const authSlice = createSlice({
@@ -80,18 +75,24 @@ const authSlice = createSlice({
         },
         setLogOut: (state) => {
             state.isAuthorized = false
-			localStorage.removeItem('bearer')
+            localStorage.removeItem('bearer')
             saveIsAuthorizedToStorage(false)
         },
-		setHeaderName: (state, action) => {
-			state.headerName = action.payload
-		},
-		setErrorMessage: (state, action) => {
-			state.errorMessage = action.payload
-		}
+        setHeaderName: (state, action) => {
+            state.headerName = action.payload
+        },
+        setErrorMessage: (state, action) => {
+            state.errorMessage = action.payload
+        },
     },
 })
 
-export const { setUserEmail, setAccessCode, setAuth, setLogOut, setHeaderName, setErrorMessage } =
-    authSlice.actions
+export const {
+    setUserEmail,
+    setAccessCode,
+    setAuth,
+    setLogOut,
+    setHeaderName,
+    setErrorMessage,
+} = authSlice.actions
 export default authSlice.reducer

@@ -9,19 +9,27 @@ import {
     getPostById,
     getCommentsByPostId,
 } from '../../store/feed/feedSlices'
+
+import {
+    postLike,
+    postLikeInfo,
+    postUnLike,
+    setPostLikeData,
+} from '../../store/insiderRequests/insiderSlice'
+
 import Header from '../Header/Header'
 import { setHeaderName } from '../../store/storeSlices'
 import User from './User/User'
 
 const Insider = () => {
-	window.scrollTo(0, 0)
+    window.scrollTo(0, 0)
     const dispatch = useDispatch()
     const feedStore = useSelector((state) => state.feed)
     const authStore = useSelector((state) => state.auth)
+    const insiderStore = useSelector((state) => state.insider)
 
-	sessionStorage.removeItem('userId')
+    sessionStorage.removeItem('userId')
 
-    const [isLiked, setIsLiked] = useState(false)
 
     useEffect(() => {
         dispatch(setHeaderName('Insider'))
@@ -56,8 +64,47 @@ const Insider = () => {
 
     const postIdRender = feedStore.postIdRender
     const postComments = feedStore.postComments
-    // console.log(postIdRender)
-    // console.log(postComments)
+
+
+
+
+
+
+
+
+
+	const [isLiked, setIsLiked] = useState(false)
+	const [numberOfLikes, setNumberOfLikes] = useState(null)
+
+
+    useEffect(() => {
+        dispatch(postLikeInfo(postIdRender.id))
+		setNumberOfLikes(postIdRender.likes_number)
+    }, [postIdRender])
+	
+	
+	const meId = localStorage.getItem('userId')
+	const likesData = insiderStore.postLikeData
+
+
+
+	
+	
+	
+	
+	const checkFuntion = (likesData, meId) => {
+		const hasObject = likesData.items ? likesData.items.some(obj => obj.user.id === meId) : '';
+		console.log(hasObject)
+		if(!hasObject) {
+			dispatch(postLike(postIdRender.id))
+			setNumberOfLikes(Number(numberOfLikes) + 1)
+		} else {
+			dispatch(postUnLike(postIdRender.id))
+			setNumberOfLikes(Number(numberOfLikes) - 1)
+		}
+	}
+
+
 
     let tags = []
     if (postIdRender.tags) {
@@ -71,12 +118,10 @@ const Insider = () => {
         userName = postIdRender.user.name
     }
 
-    const formattedDate = isNaN(new Date(postIdRender.createdAt))
-        ? ''
-        : new Date(postIdRender.createdAt).toISOString().split('T')[0]
-
     const contentRef = useRef(null)
     const htmlContent = postIdRender.content
+
+
 
     return (
         <div className={styles.insider}>
@@ -89,7 +134,14 @@ const Insider = () => {
                         <div className={styles.avatar}></div>
                         <div className={styles.nameAndData}>
                             <h3 className={styles.userName}>{userName}</h3>
-                            <h3 className={styles.data}>{formattedDate}</h3>
+                            <h3 className={styles.data}>
+                                {new Date(
+                                    postIdRender.createdAt
+                                ).toLocaleString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                })}
+                            </h3>
                         </div>
                     </div>
                     <div className={styles.iconContainer}>
@@ -97,11 +149,12 @@ const Insider = () => {
                             <i
                                 className={`ri-thumb-up-line`}
                                 onClick={() => {
-                                    setIsLiked(!isLiked)
+									checkFuntion(likesData, meId)
+                                    // setIsLiked(!isLiked)
                                 }}
                             ></i>
                         </div>
-                        <span>{isLiked ? 1 : 0}</span>
+                        <span>{numberOfLikes}</span>
                     </div>
                 </div>
                 <div
@@ -141,16 +194,20 @@ const Insider = () => {
                                                 </h3>
                                             </div>
                                         </div>
-                                        {<User value={item.content} />}
+                                        {
+                                            <User
+                                                key={index}
+                                                value={item.content}
+                                            />
+                                        }
                                         <div className={styles.replyContainer}>
                                             <h3 className={styles.data}>
-                                                {postIdRender.createdAt
-                                                    ? new Date(
-                                                          postIdRender.createdAt
-                                                      )
-                                                          .toISOString()
-                                                          .split('T')[0]
-                                                    : ''}
+                                                {new Date(
+                                                    postIdRender.createdAt
+                                                ).toLocaleString('en-US', {
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                })}
                                             </h3>
 
                                             <button
@@ -203,6 +260,7 @@ const Insider = () => {
                                                             </div>
                                                         </div>
                                                         <User
+                                                            key={index}
                                                             value={
                                                                 child.content
                                                             }
@@ -217,15 +275,15 @@ const Insider = () => {
                                                                     styles.data
                                                                 }
                                                             >
-                                                                {postIdRender.createdAt
-                                                                    ? new Date(
-                                                                          child.createdAt
-                                                                      )
-                                                                          .toISOString()
-                                                                          .split(
-                                                                              'T'
-                                                                          )[0]
-                                                                    : ''}
+                                                                {new Date(
+                                                                    postIdRender.createdAt
+                                                                ).toLocaleString(
+                                                                    'en-US',
+                                                                    {
+                                                                        month: 'short',
+                                                                        day: 'numeric',
+                                                                    }
+                                                                )}
                                                             </h3>
 
                                                             <button

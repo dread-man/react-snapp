@@ -20,21 +20,23 @@ const User = ({ value }) => {
 
             const beforeText = content.slice(currentIndex, match.index)
 
-            result.push(
-                beforeText.replace(/&nbsp;/g, ''),
-                <Link to={`/profile`}>
-                    <a
-                        onClick={() => {
+			result.push(
+				beforeText.replace(/&nbsp;/g, ''),
+				<Link key={`mention-link-${userId}`} to={`/profile`}>
+					<span
+						key={`mention-span-${userId}`}
+						onClick={() => {
 							dispatch(setUserId(userId))
 							sessionStorage.setItem('userId', userId);
-                            console.log(userId)
-                        }}
-                        key={match.index}
-                    >
-                        {userName}
-                    </a>
-                </Link>
-            )
+							console.log(userId)
+						}}
+					>
+						{userName}
+					</span>
+				</Link>
+			)
+			
+			
 
             currentIndex = match.index + match[0].length
         }

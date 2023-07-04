@@ -57,6 +57,7 @@ const Posts = () => {
 
     const renderedArray = [...Object.keys(posts).map((item) => posts[item])]
 
+
     return (
         <div className={styles.posts}>
             {renderedArray.length <= 0 && (
@@ -94,6 +95,14 @@ const Posts = () => {
                                     {item.user.name}
                                 </h3>
                                 <div className={styles.stats}>
+                                    <h3>
+                                        {new Date(
+                                            item.createdAt
+                                        ).toLocaleString('en-US', {
+                                            month: 'short',
+                                            day: 'numeric',
+                                        })}
+                                    </h3>
                                     <h3>
                                         <i className="ri-thumb-up-line"></i>{' '}
                                         {item.stats.totalLikes}
