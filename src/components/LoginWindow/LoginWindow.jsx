@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './LoginWindow.module.scss'
 import { useState } from 'react'
 import {
@@ -6,10 +6,13 @@ import {
     setUserEmail,
     setAccessCode,
     setAuth,
+	setErrorMessage
 } from '../../store/storeSlices'
 
 const LoginWindow = () => {
 	document.body.style.overflowY = 'auto'
+
+	const authStore = useSelector((state) => state.auth)
 
     const dispatch = useDispatch()
 
@@ -21,6 +24,7 @@ const LoginWindow = () => {
         userCode: userAccessCode,
         apiKey: localStorage.getItem('bearer'),
         setAuth: setAuth,
+		setErrorMessage: setErrorMessage,
     }
 
     return (
@@ -32,10 +36,17 @@ const LoginWindow = () => {
                         <span>Enter your email & access code</span>
                     </header>
                     <main>
+						{
+							authStore.errorMessage && <h3 className={styles.errorMessage}>Unauthorized</h3>
+						}
+
+
+
                         <label>
                             <img src="img/login_email.svg" alt="Email Img" />
                             <input
                                 type="email"
+								required
                                 placeholder="Email"
                                 value={userEmail}
                                 onChange={(e) => {

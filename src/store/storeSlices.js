@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 export const logIn = createAsyncThunk(
     'auth/logIn',
     async function (
-        { userEmail, userCode, apiKey, setAuth },
+        { userEmail, userCode, apiKey, setAuth, setErrorMessage },
         { rejectWithValue, dispatch }
     ) {
         try {
@@ -33,9 +33,11 @@ export const logIn = createAsyncThunk(
                 throw new Error('Unauthorized')
             }
 
+			dispatch(setErrorMessage(false))
             dispatch(setAuth())
 			
         } catch (error) {
+			dispatch(setErrorMessage(true))
             return rejectWithValue(error.message)
         }
     }
@@ -59,6 +61,7 @@ const initialState = {
     isAuthorized: loadIsAuthorizedFromStorage() === 'true',
 
 	headerName: '',
+	errorMessage: false
 }
 
 const authSlice = createSlice({
@@ -83,9 +86,12 @@ const authSlice = createSlice({
 		setHeaderName: (state, action) => {
 			state.headerName = action.payload
 		},
+		setErrorMessage: (state, action) => {
+			state.errorMessage = action.payload
+		}
     },
 })
 
-export const { setUserEmail, setAccessCode, setAuth, setLogOut, setHeaderName } =
+export const { setUserEmail, setAccessCode, setAuth, setLogOut, setHeaderName, setErrorMessage } =
     authSlice.actions
 export default authSlice.reducer
