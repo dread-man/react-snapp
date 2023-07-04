@@ -14,7 +14,6 @@ import {
     postLike,
     postLikeInfo,
     postUnLike,
-    setPostLikeData,
 } from '../../store/insiderRequests/insiderSlice'
 
 import Header from '../Header/Header'
@@ -29,7 +28,6 @@ const Insider = () => {
     const insiderStore = useSelector((state) => state.insider)
 
     sessionStorage.removeItem('userId')
-
 
     useEffect(() => {
         dispatch(setHeaderName('Insider'))
@@ -65,37 +63,33 @@ const Insider = () => {
     const postIdRender = feedStore.postIdRender
     const postComments = feedStore.postComments
 
-
-
-
-
-
-
-
-
-	const [isLiked, setIsLiked] = useState(false)
-	const [numberOfLikes, setNumberOfLikes] = useState(null)
-
+    const [isLiked, setIsLiked] = useState(false)
+    const [numberOfLikes, setNumberOfLikes] = useState(null)
 
     useEffect(() => {
         dispatch(postLikeInfo(postIdRender.id))
-		setNumberOfLikes(postIdRender.likes_number)
+        setNumberOfLikes(postIdRender.likes_number)
     }, [postIdRender])
-	
-	
-	const meId = localStorage.getItem('userId')
-	const likesData = insiderStore.postLikeData
 
+    const meId = localStorage.getItem('userId')
+    const likesData = insiderStore.postLikeData
 
+	useEffect(() => {
+		if(likesData) {
+			const hasObject = likesData.items
+			? likesData.items.some((obj) => obj.user.id === meId)
+			: ''
 
-	
-	
-	
-	
+			setIsLiked(hasObject)
+		}
+	}, [likesData])
+
+    
 	const checkFuntion = (likesData, meId) => {
-		const hasObject = likesData.items ? likesData.items.some(obj => obj.user.id === meId) : '';
-		console.log(hasObject)
-		if(!hasObject) {
+		const hasObject = likesData.items
+			? likesData.items.some((obj) => obj.user.id === meId)
+			: ''
+		if (!hasObject) {
 			dispatch(postLike(postIdRender.id))
 			setNumberOfLikes(Number(numberOfLikes) + 1)
 		} else {
@@ -103,8 +97,6 @@ const Insider = () => {
 			setNumberOfLikes(Number(numberOfLikes) - 1)
 		}
 	}
-
-
 
     let tags = []
     if (postIdRender.tags) {
@@ -120,8 +112,6 @@ const Insider = () => {
 
     const contentRef = useRef(null)
     const htmlContent = postIdRender.content
-
-
 
     return (
         <div className={styles.insider}>
@@ -149,8 +139,11 @@ const Insider = () => {
                             <i
                                 className={`ri-thumb-up-line`}
                                 onClick={() => {
-									checkFuntion(likesData, meId)
-                                    // setIsLiked(!isLiked)
+                                    checkFuntion(likesData, meId)
+
+									setInterval(() => {
+										window.location.reload()
+									},300);
                                 }}
                             ></i>
                         </div>

@@ -94,9 +94,6 @@ const insiderSlice = createSlice({
         postLikeData: null,
     },
     reducers: {
-        setPostLikeData: (state, action) => {
-            state.postLikeData = action.payload
-        },
     },
     extraReducers: {
         [postLikeInfo.fulfilled]: (state, action) => {
@@ -105,5 +102,4 @@ const insiderSlice = createSlice({
     },
 })
 
-export const { setPostLikeData } = insiderSlice.actions
 export default insiderSlice.reducer
