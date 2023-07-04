@@ -143,7 +143,7 @@ const Insider = () => {
 
 									setInterval(() => {
 										window.location.reload()
-									},300);
+									},350);
                                 }}
                             ></i>
                         </div>

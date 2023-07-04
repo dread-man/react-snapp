@@ -81,7 +81,7 @@ const Posts = () => {
                         }}
                     >
                         <div className={styles.post}>
-                            <h3>{item.title}</h3>
+                            <h3 className={styles.title}>{item.title}</h3>
                             <span>
                                 {item.content
                                     ? parser.parseFromString(
