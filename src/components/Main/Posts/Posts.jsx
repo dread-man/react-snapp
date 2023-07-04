@@ -82,12 +82,12 @@ const Posts = () => {
                     >
                         <div className={styles.post}>
                             <h3 className={styles.title}>{item.title}</h3>
-                            <span>
+                            <span className={styles.content}>
                                 {item.content
                                     ? parser.parseFromString(
                                           item.content,
                                           'text/html'
-                                      ).body.textContent
+                                      ).body.textContent.slice(0, 100)
                                     : ''}
                             </span>
                             <div className={styles.user}>

@@ -52,7 +52,7 @@ const Category = () => {
                             onClick={() => {
                                 handleSpanClick(index, item)
                                 sessionStorage.setItem('categoryId', item.id)
-                                console.log(item.id)
+                                // console.log(item.id)
                             }}
                         >
                             {item.name}
