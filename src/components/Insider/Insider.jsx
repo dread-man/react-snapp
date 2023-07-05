@@ -15,6 +15,7 @@ import {
     postLikeInfo,
     postUnLike,
     sendComment,
+    deleteComment,
 } from '../../store/insiderRequests/insiderSlice'
 
 import Header from '../Header/Header'
@@ -138,18 +139,8 @@ const Insider = () => {
 
         setInterval(() => {
             window.location.reload()
-        }, 450)
+        }, 500)
     }
-
-    // const [showDropdown, setShowDropdown] = useState(false)
-
-    // const handleMouseEnter = () => {
-    //     setShowDropdown(true)
-    // }
-
-    // const handleMouseLeave = () => {
-    //     setShowDropdown(false)
-    // }
 
     return (
         <div className={styles.insider}>
@@ -213,7 +204,7 @@ const Insider = () => {
 
                                     setInterval(() => {
                                         window.location.reload()
-                                    }, 450)
+                                    }, 500)
                                 }}
                             ></i>
                         </div>
@@ -319,6 +310,16 @@ const Insider = () => {
                                                             className={
                                                                 styles.textDrop
                                                             }
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    deleteComment(
+                                                                        item.id
+                                                                    )
+                                                                )
+																setInterval(() => {
+																	window.location.reload()
+																}, 500);
+                                                            }}
                                                         >
                                                             Delete
                                                         </li>

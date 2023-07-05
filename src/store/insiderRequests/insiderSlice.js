@@ -125,6 +125,34 @@ export const sendComment = createAsyncThunk(
     }
 )
 
+export const deleteComment = createAsyncThunk(
+	'insider/deleteComment',
+	async function (id, { rejectWithValue }) {
+		const url__comment = `http://16.162.236.210:3001/comment/${id}`
+
+		const requestOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
+            },
+        }
+
+		try {
+			const response = await fetch(url__comment, requestOptions)
+
+			if(!response.ok) {
+				throw new Error('Error with deleting comment')
+			}
+
+			const data = await response.json()
+
+		} catch (error) {
+			rejectWithValue(error.message)
+		}
+	}
+)
+
 const insiderSlice = createSlice({
     name: 'insider',
     initialState: {
