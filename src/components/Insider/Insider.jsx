@@ -14,7 +14,7 @@ import {
     postLike,
     postLikeInfo,
     postUnLike,
-	sendComment,
+    sendComment,
 } from '../../store/insiderRequests/insiderSlice'
 
 import Header from '../Header/Header'
@@ -126,17 +126,30 @@ const Insider = () => {
 
     const handleButtonClick = () => {
         console.log(inputValue)
-		console.log(postIdRender.id)
+        console.log(postIdRender.id)
 
+        const data = {
+            postId: postIdRender.id,
+            content: inputValue,
+        }
 
-		const data = {
-			postId: postIdRender.id,
-			content: inputValue,
-		}
-
-		dispatch(sendComment(data))
+        dispatch(sendComment(data))
         setInputValue('')
+
+        setInterval(() => {
+            window.location.reload()
+        }, 450)
     }
+
+    // const [showDropdown, setShowDropdown] = useState(false)
+
+    // const handleMouseEnter = () => {
+    //     setShowDropdown(true)
+    // }
+
+    // const handleMouseLeave = () => {
+    //     setShowDropdown(false)
+    // }
 
     return (
         <div className={styles.insider}>
@@ -200,7 +213,7 @@ const Insider = () => {
 
                                     setInterval(() => {
                                         window.location.reload()
-                                    }, 400)
+                                    }, 450)
                                 }}
                             ></i>
                         </div>
@@ -269,6 +282,35 @@ const Insider = () => {
                                                         {item.user.name}
                                                     </h3>
                                                 </div>
+                                                {meId == item.user.id && (
+                                                    <div
+                                                        className={
+                                                            styles.commentMenu
+                                                        }
+                                                    >
+                                                        <i className="ri-more-fill"></i>
+                                                        <ul
+                                                            className={
+                                                                styles.dropdown
+                                                            }
+                                                        >
+                                                            <li
+                                                                className={
+                                                                    styles.textDrop
+                                                                }
+                                                            >
+                                                                Edit
+                                                            </li>
+                                                            <li
+                                                                className={
+                                                                    styles.textDrop
+                                                                }
+                                                            >
+                                                                Delete
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                )}
                                             </div>
                                         </Link>
 
@@ -278,6 +320,7 @@ const Insider = () => {
                                                 value={item.content}
                                             />
                                         }
+
                                         <div className={styles.replyContainer}>
                                             <h3 className={styles.data}>
                                                 {new Date(

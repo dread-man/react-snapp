@@ -2,7 +2,7 @@
     margin: 0 auto;
     width: 47%;
     margin-top: 30px;
-	margin-bottom: 200px;
+    margin-bottom: 200px;
 
     h1 {
         font-size: 2em !important;
@@ -42,24 +42,23 @@
         justify-content: space-around;
         gap: 20px;
 
-
-		.link {
-			all: unset;
-		}
+        .link {
+            all: unset;
+        }
     }
 
     .userName {
         text-align: start;
 
-		&:hover {
-			cursor: pointer;
-		}
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     .data {
         text-align: start;
         color: rgb(214, 214, 214);
-		font-weight: 400;
+        font-weight: 400;
     }
 
     .iconContainer {
@@ -150,17 +149,18 @@
         }
 
         .userContainerComment {
-			margin-bottom: 20px;
+            margin-bottom: 20px;
 
-			.link {
-				all: unset
-
-			}
+            .link {
+                all: unset;
+            }
 
             .infoContainerComment {
                 margin-top: 20px;
                 display: flex;
                 text-align: center;
+				align-items: center;
+				position: relative;
 
                 .avatarComment {
                     width: 50px;
@@ -171,11 +171,49 @@
 
                 .userNameComment {
                     margin-left: 20px;
-					font-weight: 600;
+                    font-weight: 600;
                 }
 
-				&:hover {
-					cursor: pointer;
+                .commentMenu {
+					position: absolute;
+					right: 0;
+					i {
+						font-size: 25px;
+					}
+
+					&:hover .dropdown {
+						display: block;
+					}
+                }
+
+                &:hover {
+                    cursor: pointer;
+                }
+				
+
+				.dropdown {
+					list-style: none;
+					display: none;
+					background-color: #fff;
+					border: 1px solid rgba(0, 0, 0, 0.15);
+					position: absolute;
+					right: 0;
+					border-radius: 0.25rem;
+					color: #6c757d;
+					transition: 0.3s;
+					text-align: left;
+					width: 150px;
+
+					.textDrop {
+						font-size: 17px;
+						transition: .3s;
+						padding: 10px;
+						padding-left: 20px;
+						&:hover {
+							background-color: #e6e6e6;
+						}
+					}
+
 				}
             }
 
@@ -202,13 +240,12 @@
             }
         }
 
-		.childrenContainer {
-			margin-left: 40px;
+        .childrenContainer {
+            margin-left: 40px;
 
-
-			.mentionedUser {
-				font-weight: 700;
-			}
-		}
+            .mentionedUser {
+                font-weight: 700;
+            }
+        }
     }
 }
