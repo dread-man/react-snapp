@@ -14,6 +14,7 @@ import {
     postLike,
     postLikeInfo,
     postUnLike,
+	sendComment,
 } from '../../store/insiderRequests/insiderSlice'
 
 import Header from '../Header/Header'
@@ -117,7 +118,25 @@ const Insider = () => {
     const contentRef = useRef(null)
     const htmlContent = postIdRender.content
 
-    const downloadProfile = (id) => {}
+    const [inputValue, setInputValue] = useState('')
+
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value)
+    }
+
+    const handleButtonClick = () => {
+        console.log(inputValue)
+		console.log(postIdRender.id)
+
+
+		const data = {
+			postId: postIdRender.id,
+			content: inputValue,
+		}
+
+		dispatch(sendComment(data))
+        setInputValue('')
+    }
 
     return (
         <div className={styles.insider}>
@@ -193,9 +212,15 @@ const Insider = () => {
                     ref={contentRef}
                     dangerouslySetInnerHTML={{ __html: htmlContent }}
                 ></div>
+
                 <div className={styles.commentContainer}>
-                    <input type="text" placeholder="Add a comment" />
-                    <button>Send</button>
+                    <input
+                        type="text"
+                        placeholder="Add a comment"
+                        value={inputValue}
+                        onChange={handleInputChange}
+                    />
+                    <button onClick={handleButtonClick}>Send</button>
                 </div>
 
                 {postComments && (
@@ -256,7 +281,7 @@ const Insider = () => {
                                         <div className={styles.replyContainer}>
                                             <h3 className={styles.data}>
                                                 {new Date(
-                                                    postIdRender.createdAt
+                                                    item.createdAt
                                                 ).toLocaleString('en-US', {
                                                     month: 'short',
                                                     day: 'numeric',
@@ -278,7 +303,9 @@ const Insider = () => {
                                                     className={
                                                         styles.childrenContainer
                                                     }
-													onClick={() => {console.log(child)}}
+                                                    onClick={() => {
+                                                        console.log(child)
+                                                    }}
                                                 >
                                                     <div
                                                         className={
@@ -335,14 +362,21 @@ const Insider = () => {
                                                             </div>
                                                         </Link>
 
-
-														<span className={styles.mentionedUser}>{child.mentionedUsers[0].name + '   '}</span>
+                                                        <span
+                                                            className={
+                                                                styles.mentionedUser
+                                                            }
+                                                        >
+                                                            {child
+                                                                .mentionedUsers[0]
+                                                                .name + '   '}
+                                                        </span>
                                                         <User
                                                             key={index}
                                                             value={
-																child.content
+                                                                child.content
                                                             }
-															/>
+                                                        />
                                                         <div
                                                             className={
                                                                 styles.replyContainer
@@ -354,7 +388,7 @@ const Insider = () => {
                                                                 }
                                                             >
                                                                 {new Date(
-                                                                    postIdRender.createdAt
+                                                                    child.createdAt
                                                                 ).toLocaleString(
                                                                     'en-US',
                                                                     {

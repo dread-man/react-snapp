@@ -50,7 +50,6 @@ export const postUnLike = createAsyncThunk(
     }
 )
 
-
 export const postLikeInfo = createAsyncThunk(
     'insider/postLike',
     async function (id, { rejectWithValue, dispatch }) {
@@ -87,18 +86,62 @@ export const postLikeInfo = createAsyncThunk(
     }
 )
 
+export const sendComment = createAsyncThunk(
+    'insider/sendComment',
+    async function ({ postId, content }, { rejectWithValue }) {
+        const url__comment = 'http://16.162.236.210:3001/comment'
+
+        const requestBody = {
+            postId: postId,
+            content: content,
+            parentCommentId: null,
+            repliedChildCommentId: null,
+            taggedUserIds: [],
+            mentionedUserIds: [],
+        }
+
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
+            },
+			body: JSON.stringify(requestBody),
+        }
+
+        try {
+			const response = await fetch(url__comment, requestOptions)
+			if(!response.ok) {
+				throw new Error('Error with send comment')
+			}
+
+			const data = await response.json()
+			return data
+
+
+        } catch (error) {
+            rejectWithValue(error.message)
+        }
+    }
+)
+
 const insiderSlice = createSlice({
     name: 'insider',
     initialState: {
         hehe: 'hello',
         postLikeData: null,
+
+
+		sendCommentAfter: null,
     },
-    reducers: {
-    },
+    reducers: {},
     extraReducers: {
         [postLikeInfo.fulfilled]: (state, action) => {
             state.postLikeData = action.payload
         },
+		[sendComment.fulfilled]: (state, action) => {
+			state.sendCommentAfter = action.payload
+		}
     },
 })
 
