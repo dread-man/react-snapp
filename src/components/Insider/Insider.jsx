@@ -278,6 +278,7 @@ const Insider = () => {
                                                     className={
                                                         styles.childrenContainer
                                                     }
+													onClick={() => {console.log(child)}}
                                                 >
                                                     <div
                                                         className={
@@ -334,12 +335,14 @@ const Insider = () => {
                                                             </div>
                                                         </Link>
 
+
+														<span className={styles.mentionedUser}>{child.mentionedUsers[0].name + '   '}</span>
                                                         <User
                                                             key={index}
                                                             value={
-                                                                child.content
+																child.content
                                                             }
-                                                        />
+															/>
                                                         <div
                                                             className={
                                                                 styles.replyContainer
