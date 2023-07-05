@@ -245,15 +245,15 @@ const Insider = () => {
                                     <div
                                         className={styles.userContainerComment}
                                     >
-                                        <Link
-                                            className={styles.link}
-                                            key={`mention-link-${userIdPost}`}
-                                            to={`/profile`}
+                                        <div
+                                            className={
+                                                styles.infoContainerComment
+                                            }
                                         >
-                                            <div
-                                                className={
-                                                    styles.infoContainerComment
-                                                }
+                                            <Link
+                                                className={styles.link}
+                                                key={`mention-link-${userIdPost}`}
+                                                to={`/profile`}
                                                 onClick={() => {
                                                     dispatch(
                                                         setUserId(userIdPost)
@@ -269,10 +269,23 @@ const Insider = () => {
                                                         styles.avatarComment
                                                     }
                                                 ></div>
-                                                <div
-                                                    className={
-                                                        styles.nameAndData
-                                                    }
+                                            </Link>
+                                            <div className={styles.nameAndData}>
+                                                <Link
+                                                    className={styles.link}
+                                                    key={`mention-link-${userIdPost}`}
+                                                    to={`/profile`}
+                                                    onClick={() => {
+                                                        dispatch(
+                                                            setUserId(
+                                                                userIdPost
+                                                            )
+                                                        )
+                                                        sessionStorage.setItem(
+                                                            'userId',
+                                                            item.user.id
+                                                        )
+                                                    }}
                                                 >
                                                     <h3
                                                         className={
@@ -281,38 +294,38 @@ const Insider = () => {
                                                     >
                                                         {item.user.name}
                                                     </h3>
-                                                </div>
-                                                {meId == item.user.id && (
-                                                    <div
+                                                </Link>
+                                            </div>
+                                            {meId == item.user.id && (
+                                                <div
+                                                    className={
+                                                        styles.commentMenu
+                                                    }
+                                                >
+                                                    <i className="ri-more-fill"></i>
+                                                    <ul
                                                         className={
-                                                            styles.commentMenu
+                                                            styles.dropdown
                                                         }
                                                     >
-                                                        <i className="ri-more-fill"></i>
-                                                        <ul
+                                                        <li
                                                             className={
-                                                                styles.dropdown
+                                                                styles.textDrop
                                                             }
                                                         >
-                                                            <li
-                                                                className={
-                                                                    styles.textDrop
-                                                                }
-                                                            >
-                                                                Edit
-                                                            </li>
-                                                            <li
-                                                                className={
-                                                                    styles.textDrop
-                                                                }
-                                                            >
-                                                                Delete
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </Link>
+                                                            Edit
+                                                        </li>
+                                                        <li
+                                                            className={
+                                                                styles.textDrop
+                                                            }
+                                                        >
+                                                            Delete
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
 
                                         {
                                             <User
