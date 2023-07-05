@@ -1,7 +1,10 @@
+
+
 .container {
     margin: 0 auto;
     width: 47%;
     margin-top: 30px;
+
 
     h1 {
         font-size: 2em !important;
@@ -40,10 +43,19 @@
         flex-direction: column;
         justify-content: space-around;
         gap: 20px;
+
+
+		.link {
+			all: unset;
+		}
     }
 
     .userName {
         text-align: start;
+
+		&:hover {
+			cursor: pointer;
+		}
     }
 
     .data {
@@ -142,6 +154,13 @@
         .userContainerComment {
 			margin-bottom: 20px;
 
+
+
+			.link {
+				all: unset
+
+			}
+
             .infoContainerComment {
                 margin-top: 20px;
                 display: flex;
@@ -158,6 +177,11 @@
                     margin-left: 20px;
 					font-weight: 600;
                 }
+
+
+				&:hover {
+					cursor: pointer;
+				}
             }
 
             .replyContainer {

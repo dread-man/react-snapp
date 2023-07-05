@@ -20,6 +20,9 @@ import Header from '../Header/Header'
 import { setHeaderName } from '../../store/storeSlices'
 import User from './User/User'
 
+import { setUserId } from '../../store/user/userSlice'
+import { Link } from 'react-router-dom'
+
 const Insider = () => {
     window.scrollTo(0, 0)
     const dispatch = useDispatch()
@@ -74,29 +77,28 @@ const Insider = () => {
     const meId = localStorage.getItem('userId')
     const likesData = insiderStore.postLikeData
 
-	useEffect(() => {
-		if(likesData) {
-			const hasObject = likesData.items
-			? likesData.items.some((obj) => obj.user.id === meId)
-			: ''
+    useEffect(() => {
+        if (likesData) {
+            const hasObject = likesData.items
+                ? likesData.items.some((obj) => obj.user.id === meId)
+                : ''
 
-			setIsLiked(hasObject)
-		}
-	}, [likesData])
+            setIsLiked(hasObject)
+        }
+    }, [likesData])
 
-    
-	const checkFuntion = (likesData, meId) => {
-		const hasObject = likesData.items
-			? likesData.items.some((obj) => obj.user.id === meId)
-			: ''
-		if (!hasObject) {
-			dispatch(postLike(postIdRender.id))
-			setNumberOfLikes(Number(numberOfLikes) + 1)
-		} else {
-			dispatch(postUnLike(postIdRender.id))
-			setNumberOfLikes(Number(numberOfLikes) - 1)
-		}
-	}
+    const checkFuntion = (likesData, meId) => {
+        const hasObject = likesData.items
+            ? likesData.items.some((obj) => obj.user.id === meId)
+            : ''
+        if (!hasObject) {
+            dispatch(postLike(postIdRender.id))
+            setNumberOfLikes(Number(numberOfLikes) + 1)
+        } else {
+            dispatch(postUnLike(postIdRender.id))
+            setNumberOfLikes(Number(numberOfLikes) - 1)
+        }
+    }
 
     let tags = []
     if (postIdRender.tags) {
@@ -106,12 +108,16 @@ const Insider = () => {
     }
 
     let userName = ''
+    let userIdPost = ''
     if (postIdRender.user) {
         userName = postIdRender.user.name
+        userIdPost = postIdRender.user.id
     }
 
     const contentRef = useRef(null)
     const htmlContent = postIdRender.content
+
+    const downloadProfile = (id) => {}
 
     return (
         <div className={styles.insider}>
@@ -121,9 +127,41 @@ const Insider = () => {
                 <p className={styles.tags}>{tags}</p>
                 <div className={styles.userContainer}>
                     <div className={styles.infoContainer}>
-                        <div className={styles.avatar}></div>
+                        <Link
+                            className={styles.link}
+                            key={`mention-link-${userIdPost}`}
+                            to={`/profile`}
+                        >
+                            <div
+                                className={styles.avatar}
+                                onClick={() => {
+                                    dispatch(setUserId(userIdPost))
+                                    sessionStorage.setItem('userId', userIdPost)
+                                }}
+                            ></div>
+                        </Link>
+
                         <div className={styles.nameAndData}>
-                            <h3 className={styles.userName}>{userName}</h3>
+                            <Link
+                                className={styles.link}
+                                key={`mention-link-${userIdPost}`}
+                                to={`/profile`}
+                            >
+                                <h3
+                                    className={styles.userName}
+                                    key={`mention-span-${userIdPost}`}
+                                    onClick={() => {
+                                        dispatch(setUserId(userIdPost))
+                                        sessionStorage.setItem(
+                                            'userId',
+                                            userIdPost
+                                        )
+                                    }}
+                                >
+                                    {userName}
+                                </h3>
+                            </Link>
+
                             <h3 className={styles.data}>
                                 {new Date(
                                     postIdRender.createdAt
@@ -141,9 +179,9 @@ const Insider = () => {
                                 onClick={() => {
                                     checkFuntion(likesData, meId)
 
-									setInterval(() => {
-										window.location.reload()
-									},350);
+                                    setInterval(() => {
+                                        window.location.reload()
+                                    }, 400)
                                 }}
                             ></i>
                         </div>
@@ -169,24 +207,46 @@ const Insider = () => {
                                     <div
                                         className={styles.userContainerComment}
                                     >
-                                        <div
-                                            className={
-                                                styles.infoContainerComment
-                                            }
+                                        <Link
+                                            className={styles.link}
+                                            key={`mention-link-${userIdPost}`}
+                                            to={`/profile`}
                                         >
                                             <div
-                                                className={styles.avatarComment}
-                                            ></div>
-                                            <div className={styles.nameAndData}>
-                                                <h3
+                                                className={
+                                                    styles.infoContainerComment
+                                                }
+                                                onClick={() => {
+                                                    dispatch(
+                                                        setUserId(userIdPost)
+                                                    )
+                                                    sessionStorage.setItem(
+                                                        'userId',
+                                                        item.user.id
+                                                    )
+                                                }}
+                                            >
+                                                <div
                                                     className={
-                                                        styles.userNameComment
+                                                        styles.avatarComment
+                                                    }
+                                                ></div>
+                                                <div
+                                                    className={
+                                                        styles.nameAndData
                                                     }
                                                 >
-                                                    {item.user.name}
-                                                </h3>
+                                                    <h3
+                                                        className={
+                                                            styles.userNameComment
+                                                        }
+                                                    >
+                                                        {item.user.name}
+                                                    </h3>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </Link>
+
                                         {
                                             <User
                                                 key={index}
@@ -224,34 +284,56 @@ const Insider = () => {
                                                             styles.userContainerComment
                                                         }
                                                     >
-                                                        <div
+                                                        <Link
                                                             className={
-                                                                styles.infoContainerComment
+                                                                styles.link
                                                             }
+                                                            key={`mention-link-${userIdPost}`}
+                                                            to={`/profile`}
                                                         >
                                                             <div
                                                                 className={
-                                                                    styles.avatarComment
+                                                                    styles.infoContainerComment
                                                                 }
-                                                            ></div>
-                                                            <div
-                                                                className={
-                                                                    styles.nameAndData
-                                                                }
-                                                            >
-                                                                <h3
-                                                                    className={
-                                                                        styles.userNameComment
-                                                                    }
-                                                                >
-                                                                    {
+                                                                onClick={() => {
+                                                                    dispatch(
+                                                                        setUserId(
+                                                                            userIdPost
+                                                                        )
+                                                                    )
+                                                                    sessionStorage.setItem(
+                                                                        'userId',
                                                                         child
                                                                             .user
-                                                                            .name
+                                                                            .id
+                                                                    )
+                                                                }}
+                                                            >
+                                                                <div
+                                                                    className={
+                                                                        styles.avatarComment
                                                                     }
-                                                                </h3>
+                                                                ></div>
+                                                                <div
+                                                                    className={
+                                                                        styles.nameAndData
+                                                                    }
+                                                                >
+                                                                    <h3
+                                                                        className={
+                                                                            styles.userNameComment
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            child
+                                                                                .user
+                                                                                .name
+                                                                        }
+                                                                    </h3>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </Link>
+
                                                         <User
                                                             key={index}
                                                             value={
