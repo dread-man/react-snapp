@@ -143,7 +143,6 @@ const Insider = () => {
     }
 
     const [edit, setEdit] = useState(false)
-	// console.log(postIdRender)
 
     return (
         <div className={styles.insider}>
@@ -158,13 +157,14 @@ const Insider = () => {
                             key={`mention-link-${userIdPost}`}
                             to={`/profile`}
                         >
-                            <div
+                            <img
+                                src={postIdRender.user ? postIdRender.user.avatar : ''}
                                 className={styles.avatar}
                                 onClick={() => {
                                     dispatch(setUserId(userIdPost))
                                     sessionStorage.setItem('userId', userIdPost)
                                 }}
-                            ></div>
+                            ></img>
                         </Link>
 
                         <div className={styles.nameAndData}>
@@ -258,11 +258,12 @@ const Insider = () => {
                                                     )
                                                 }}
                                             >
-                                                <div
+                                                <img
+                                                    src={item.user.avatar}
                                                     className={
                                                         styles.avatarComment
                                                     }
-                                                ></div>
+                                                ></img>
                                             </Link>
                                             <div className={styles.nameAndData}>
                                                 <Link
@@ -439,11 +440,16 @@ const Insider = () => {
                                                                     )
                                                                 }}
                                                             >
-                                                                <div
+                                                                <img
+                                                                    src={
+                                                                        child
+                                                                            .user
+                                                                            .avatar
+                                                                    }
                                                                     className={
                                                                         styles.avatarComment
                                                                     }
-                                                                ></div>
+                                                                ></img>
                                                                 <div
                                                                     className={
                                                                         styles.nameAndData
@@ -470,10 +476,11 @@ const Insider = () => {
                                                             }
                                                         >
                                                             {child
-                                                                .mentionedUsers[0]
-                                                                 && child
-                                                                .mentionedUsers[0]
-                                                                .name + '   '}
+                                                                .mentionedUsers[0] &&
+                                                                child
+                                                                    .mentionedUsers[0]
+                                                                    .name +
+                                                                    '   '}
                                                         </span>
                                                         <User
                                                             key={index}
@@ -514,11 +521,8 @@ const Insider = () => {
                                                 </div>
                                             )
                                         })}
-										
                                 </div>
-								
                             ))}
-							
                     </div>
                 )}
             </div>

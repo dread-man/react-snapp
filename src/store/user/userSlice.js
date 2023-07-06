@@ -20,7 +20,7 @@ export const getUserProfile = createAsyncThunk(
 				throw new Error('Error with get user profile')
 			}
 
-			const data = response.json()
+			const data = await response.json()
 			return data
 			
 		} catch (error) {

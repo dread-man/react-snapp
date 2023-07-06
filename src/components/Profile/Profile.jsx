@@ -40,16 +40,24 @@ const Profile = () => {
         dispatch(getUserProfile(userId))
     }, [])
 
+    // console.log(userData)
+
     return (
         <div>
             <Header />
-            <div className={styles.userAvatar}></div>
+
+            {userData && (
+                <img
+                    className={styles.userAvatar}
+                    src={userData.avatar}
+                    alt=""
+                />
+            )}
+
             {userData && (
                 <div>
                     <h3 className={styles.userName}>{userData.name}</h3>
-                    <div className={styles.bio}>
-						{userData.bio}
-					</div>
+                    <div className={styles.bio}>{userData.bio}</div>
                 </div>
             )}
         </div>
