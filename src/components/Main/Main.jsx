@@ -1,12 +1,12 @@
 import styles from './Main.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import feedSlices, { getConfig, getMe } from '../../store/feed/feedSlices'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getApiKey } from '../../App'
 import Header from '../Header/Header'
 import Category from './Category/Category'
 import Posts from './Posts/Posts'
-import { getPosts, getVideChat } from '../../store/feed/feedSlices'
+import { getPosts, getVideoChat } from '../../store/feed/feedSlices'
 import { setHeaderName, setLogOut } from '../../store/storeSlices'
 import VideoWindow from './VideoWindow/VideoWindow'
 
@@ -29,7 +29,7 @@ const Main = () => {
             await fetchData(authStore.userEmail, authStore.userAccessCode)
             dispatch(getConfig())
             dispatch(getMe())
-			dispatch(getVideChat())
+            dispatch(getVideoChat())
             dispatch(getPosts(sessionStorage.getItem('categoryId')))
         }
 
@@ -40,11 +40,10 @@ const Main = () => {
             if (savedUserId) {
                 dispatch(getConfig())
                 dispatch(getMe())
-				dispatch(getVideChat())
+                dispatch(getVideoChat())
                 dispatch(getPosts(sessionStorage.getItem('categoryId')))
             }
         }
-
     }, [
         authStore.userEmail,
         authStore.userAccessCode,

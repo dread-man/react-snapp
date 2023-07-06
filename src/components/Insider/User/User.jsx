@@ -36,8 +36,6 @@ const User = ({ value }) => {
 				</Link>
 			)
 			
-			
-
             currentIndex = match.index + match[0].length
         }
 

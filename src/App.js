@@ -19,8 +19,6 @@ export async function getApiKey(userEmail, userCode) {
         masterPassword: 'smappsilverhorn123',
     }
 
-    const obh2 = {}
-
     try {
         const response = await axios.post(
             url__login__master__password,
@@ -52,6 +50,7 @@ function App() {
             checkLocalStorage(dispatch)
         }, 1000)
     }, []) // for check localstorage null
+
 
     return (
         <div className={styles.App}>

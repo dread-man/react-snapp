@@ -57,7 +57,6 @@ const Posts = () => {
 
     const renderedArray = [...Object.keys(posts).map((item) => posts[item])]
 
-
     return (
         <div className={styles.posts}>
             {renderedArray.length <= 0 && (
@@ -81,15 +80,36 @@ const Posts = () => {
                         }}
                     >
                         <div className={styles.post}>
-                            <h3 className={styles.title}>{item.title}</h3>
-                            <span className={styles.content}>
-                                {item.content
-                                    ? parser.parseFromString(
-                                          item.content,
-                                          'text/html'
-                                      ).body.textContent.slice(0, 100)
-                                    : ''}
-                            </span>
+                            <div className={styles.containerTitleAndImage}>
+                                <div>
+                                    <h3 className={styles.title}>
+                                        {item.title}
+                                    </h3>
+                                    <span className={styles.content}>
+                                        {item.content
+                                            ? parser
+                                                  .parseFromString(
+                                                      item.content,
+                                                      'text/html'
+                                                  )
+                                                  .body.textContent.slice(
+                                                      0,
+                                                      100
+                                                  )
+                                            : ''}
+                                    </span>
+                                </div>
+
+                                {item.files[0] && (
+                                    <img
+                                        src={item.files[0].url}
+                                        alt=""
+                                        width={200}
+                                        height={200}
+                                    />
+                                )}
+                            </div>
+
                             <div className={styles.user}>
                                 <h3 className={styles.userName}>
                                     {item.user.name}

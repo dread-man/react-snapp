@@ -142,6 +142,9 @@ const Insider = () => {
         }, 500)
     }
 
+    const [edit, setEdit] = useState(false)
+	// console.log(postIdRender)
+
     return (
         <div className={styles.insider}>
             <Header />
@@ -294,46 +297,86 @@ const Insider = () => {
                                                     }
                                                 >
                                                     <i className="ri-more-fill"></i>
-                                                    <ul
-                                                        className={
-                                                            styles.dropdown
-                                                        }
-                                                    >
-                                                        <li
+                                                    {!edit && (
+                                                        <ul
                                                             className={
-                                                                styles.textDrop
+                                                                styles.dropdown
                                                             }
                                                         >
-                                                            Edit
-                                                        </li>
-                                                        <li
-                                                            className={
-                                                                styles.textDrop
-                                                            }
-                                                            onClick={() => {
-                                                                dispatch(
-                                                                    deleteComment(
-                                                                        item.id
+                                                            {/* <li
+                                                                className={
+                                                                    styles.textDrop
+                                                                }
+                                                                onClick={() => {
+                                                                    setEdit(
+                                                                        !edit
                                                                     )
-                                                                )
-																setInterval(() => {
-																	window.location.reload()
-																}, 500);
-                                                            }}
+                                                                }}
+                                                            >
+                                                                Edit
+                                                            </li> */}
+                                                            <li
+                                                                className={
+                                                                    styles.textDrop
+                                                                }
+                                                                onClick={() => {
+                                                                    dispatch(
+                                                                        deleteComment(
+                                                                            item.id
+                                                                        )
+                                                                    )
+                                                                    setInterval(
+                                                                        () => {
+                                                                            window.location.reload()
+                                                                        },
+                                                                        500
+                                                                    )
+                                                                }}
+                                                            >
+                                                                Delete
+                                                            </li>
+                                                        </ul>
+                                                    )}
+                                                    {/* {edit && (
+                                                        <ul
+                                                            className={
+                                                                styles.dropdown
+                                                            }
                                                         >
-                                                            Delete
-                                                        </li>
-                                                    </ul>
+                                                            <li
+                                                                className={
+                                                                    styles.textDrop
+                                                                }
+                                                                onClick={() => {
+                                                                    console.log(
+                                                                        'send response for edit'
+                                                                    )
+                                                                }}
+                                                            >
+                                                                Save
+                                                            </li>
+                                                            <li
+                                                                className={
+                                                                    styles.textDrop
+                                                                }
+                                                                onClick={() => {
+                                                                    setEdit(
+                                                                        !edit
+                                                                    )
+                                                                }}
+                                                            >
+                                                                Cancel
+                                                            </li>
+                                                        </ul>
+                                                    )} */}
                                                 </div>
                                             )}
                                         </div>
 
-                                        {
-                                            <User
-                                                key={index}
-                                                value={item.content}
-                                            />
-                                        }
+                                        <User
+                                            key={index}
+                                            value={item.content}
+                                        />
 
                                         <div className={styles.replyContainer}>
                                             <h3 className={styles.data}>
@@ -345,13 +388,15 @@ const Insider = () => {
                                                 })}
                                             </h3>
 
-                                            <button
+                                            {/* <button
                                                 className={styles.commentReply}
+
                                             >
                                                 Reply
-                                            </button>
+                                            </button> */}
                                         </div>
                                     </div>
+
                                     {item.children &&
                                         item.children.map((child, index) => {
                                             return (
@@ -426,6 +471,8 @@ const Insider = () => {
                                                         >
                                                             {child
                                                                 .mentionedUsers[0]
+                                                                 && child
+                                                                .mentionedUsers[0]
                                                                 .name + '   '}
                                                         </span>
                                                         <User
@@ -455,20 +502,23 @@ const Insider = () => {
                                                                 )}
                                                             </h3>
 
-                                                            <button
+                                                            {/* <button
                                                                 className={
                                                                     styles.commentReply
                                                                 }
                                                             >
                                                                 Reply
-                                                            </button>
+                                                            </button> */}
                                                         </div>
                                                     </div>
                                                 </div>
                                             )
                                         })}
+										
                                 </div>
+								
                             ))}
+							
                     </div>
                 )}
             </div>

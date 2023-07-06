@@ -182,7 +182,7 @@ export const getCommentsByPostId = createAsyncThunk(
     }
 )
 
-export const getVideChat = createAsyncThunk(
+export const getVideoChat = createAsyncThunk(
 	'feed/getVideoChat',
 	async function (_, { rejectWithValue }) {
 		const url__video__chat = 'http://16.162.236.210:3001/video-chat'
@@ -265,7 +265,7 @@ const feedSlice = createSlice({
 		[getCommentsByPostId.fulfilled]: (state, action) => {
 			state.postComments = [...action.payload.items]
 		},
-		[getVideChat.fulfilled]: (state, action) => {
+		[getVideoChat.fulfilled]: (state, action) => {
 			state.videoData = action.payload
 		}
     },

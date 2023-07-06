@@ -40,6 +40,23 @@
         margin: 40px 0px;
         transition: 0.3s;
 
+
+		.containerTitleAndImage {
+			width: 100%;
+			display: flex;
+			justify-content: space-between !important;
+
+
+			div {
+				text-align: start;
+			}
+
+
+			img  {
+				border-radius: 15px;
+			}
+		}
+
         &:hover {
             cursor: pointer;
             box-shadow: 0 0.27rem 0.9rem rgba(0, 0, 0, 0.125);

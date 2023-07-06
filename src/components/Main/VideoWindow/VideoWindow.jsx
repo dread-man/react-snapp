@@ -1,7 +1,10 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './VideoWindow.module.scss'
+import { getVideoChatToken } from '../../../store/video/videoSlice'
+
 
 const VideoWindow = () => {
+    const dispatch = useDispatch()
     const feedStore = useSelector((state) => state.feed)
     const videoData = feedStore.videoData
 
@@ -33,7 +36,9 @@ const VideoWindow = () => {
                             )}
                         </div>
                     )}
-                    <button className={styles.joinButton}>Join now</button>
+                    <button className={styles.joinButton} onClick={() => {dispatch(getVideoChatToken(1688362379))}}>
+                        Join now
+                    </button>
                 </div>
             )}
         </div>
