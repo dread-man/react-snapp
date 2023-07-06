@@ -182,32 +182,7 @@ export const getCommentsByPostId = createAsyncThunk(
     }
 )
 
-export const getVideoChat = createAsyncThunk(
-	'feed/getVideoChat',
-	async function (_, { rejectWithValue }) {
-		const url__video__chat = 'http://16.162.236.210:3001/video-chat'
 
-		const requestOptions = {
-			method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
-            },
-		}
-
-		try {
-            const response = await fetch(url__video__chat, requestOptions)
-            if (!response.ok) {
-                throw new Error('Error video chat')
-            }
-
-            const data = response.json()
-            return data
-        } catch (error) {
-            rejectWithValue(error.message)
-        }
-	}
-)
 
 const feedSlice = createSlice({
     name: 'feed',
@@ -265,9 +240,7 @@ const feedSlice = createSlice({
 		[getCommentsByPostId.fulfilled]: (state, action) => {
 			state.postComments = [...action.payload.items]
 		},
-		[getVideoChat.fulfilled]: (state, action) => {
-			state.videoData = action.payload
-		}
+		
     },
 })
 

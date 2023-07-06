@@ -1,5 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+export const getVideoChat = createAsyncThunk(
+	'feed/getVideoChat',
+	async function (_, { rejectWithValue }) {
+		const url__video__chat = 'http://16.162.236.210:3001/video-chat'
+
+		const requestOptions = {
+			method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
+            },
+		}
+
+		try {
+            const response = await fetch(url__video__chat, requestOptions)
+            if (!response.ok) {
+                throw new Error('Error video chat')
+            }
+
+            const data = response.json()
+            return data
+        } catch (error) {
+            rejectWithValue(error.message)
+        }
+	}
+)
+
 export const getVideoChatToken = createAsyncThunk(
 	'video/getVideoChatToken',
 	async function (channelName, { rejectWithValue }) {
@@ -35,12 +62,17 @@ const videoSlice = createSlice({
 	name: 'video',
 	initialState: {
 		// videoToken: null
+		videoData: null,
 
 	},
 	reducers: {
 
 	},
 	extraReducers: {
-
+		[getVideoChat.fulfilled]: (state, action) => {
+			state.videoData = action.payload
+		}
 	},
 })
+
+export default videoSlice.reducer

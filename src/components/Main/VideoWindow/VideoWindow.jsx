@@ -5,8 +5,8 @@ import { getVideoChatToken } from '../../../store/video/videoSlice'
 
 const VideoWindow = () => {
     const dispatch = useDispatch()
-    const feedStore = useSelector((state) => state.feed)
-    const videoData = feedStore.videoData
+    const videoStore = useSelector((state) => state.video)
+    const videoData = videoStore.videoData
 
     return (
         <div className={styles.videoContainer}>
