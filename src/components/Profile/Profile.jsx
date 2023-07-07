@@ -49,7 +49,7 @@ const Profile = () => {
             {userData && (
                 <img
                     className={styles.userAvatar}
-                    src={userData.avatar}
+                    src={userData.avatar ? userData.avatar : `http://16.162.235.143:3002/assets/avatarPlaceholder${ Math.floor(Math.random() * 4) + 1}.png`}
                     alt=""
                 />
             )}

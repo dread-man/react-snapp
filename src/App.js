@@ -49,6 +49,7 @@ function App() {
         setTimeout(() => {
             checkLocalStorage(dispatch)
         }, 1000)
+
     }, []) // for check localstorage null
 
 

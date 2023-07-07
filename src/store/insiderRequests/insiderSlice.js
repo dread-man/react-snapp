@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const postLike = createAsyncThunk(
     'insider/postLike',
-    async function (id, { rejectWithValue, dispatch }) {
+    async function (id, { rejectWithValue }) {
         const url__post__id__like = `http://16.162.236.210:3001/post/${id}/like`
 
         const requestOptions = {
@@ -27,7 +27,7 @@ export const postLike = createAsyncThunk(
 
 export const postUnLike = createAsyncThunk(
     'insider/postLike',
-    async function (id, { rejectWithValue, dispatch }) {
+    async function (id, { rejectWithValue }) {
         const url__post__id__unlike = `http://16.162.236.210:3001/post/${id}/unlike`
 
         const requestOptions = {
@@ -52,7 +52,7 @@ export const postUnLike = createAsyncThunk(
 
 export const postLikeInfo = createAsyncThunk(
     'insider/postLike',
-    async function (id, { rejectWithValue, dispatch }) {
+    async function (id, { rejectWithValue }) {
         const url__post__id__likeInfo = `
 		http://16.162.236.210:3001/post-like`
 
@@ -145,8 +145,36 @@ export const deleteComment = createAsyncThunk(
 				throw new Error('Error with deleting comment')
 			}
 
-			const data = await response.json()
+			// const data = await response.json()
 
+		} catch (error) {
+			rejectWithValue(error.message)
+		}
+	}
+)
+
+export const getAvatar = createAsyncThunk(
+	'insider/gatAvatars',
+	async function (_, { rejectWithValue }) {
+		const url = 'http://16.162.235.143:3002/assets/avatarPlaceholder1.png'
+
+		const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('bearer')}`,
+            },
+        }
+		
+		try {
+			const response = await fetch(url, requestOptions)
+
+			if(!response.ok) {
+				throw new Error('Error get avatar')
+			}
+
+			// const data = await response.json()
+			
 		} catch (error) {
 			rejectWithValue(error.message)
 		}
@@ -161,6 +189,7 @@ const insiderSlice = createSlice({
 
 
 		sendCommentAfter: null,
+		avatars: null,
     },
     reducers: {},
     extraReducers: {

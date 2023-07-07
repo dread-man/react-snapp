@@ -96,7 +96,7 @@ export const getPosts = createAsyncThunk(
 
 export const getPostsByPage = createAsyncThunk(
     'feed/getPostsByPage',
-    async function ({ categoryId, page }, { rejectWithValue, dispatch }) {
+    async function ({ categoryId, page }, { rejectWithValue }) {
         const url__post = 'http://16.162.236.210:3001/post'
 
         const params = new URLSearchParams({
@@ -147,7 +147,7 @@ export const getPostById = createAsyncThunk(
                 throw new Error('Error post by id')
             }
 
-            const data = response.json()
+            const data = await response.json()
             return data
         } catch (error) {
             rejectWithValue(error.message)

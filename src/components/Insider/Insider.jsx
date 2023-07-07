@@ -143,6 +143,8 @@ const Insider = () => {
     }
 
     const [edit, setEdit] = useState(false)
+    console.log(postIdRender)
+    // console.log(postComments)
 
     return (
         <div className={styles.insider}>
@@ -158,7 +160,13 @@ const Insider = () => {
                             to={`/profile`}
                         >
                             <img
-                                src={postIdRender.user ? postIdRender.user.avatar : ''}
+                                src={
+                                    postIdRender.user
+                                        ? postIdRender.user.avatar
+                                            ? postIdRender.user.avatar
+                                            : `http://16.162.235.143:3002/assets/avatarPlaceholder${ Math.floor(Math.random() * 4) + 1}.png`
+                                        : ''
+                                }
                                 className={styles.avatar}
                                 onClick={() => {
                                     dispatch(setUserId(userIdPost))
@@ -259,10 +267,28 @@ const Insider = () => {
                                                 }}
                                             >
                                                 <img
-                                                    src={item.user.avatar}
+                                                    src={
+                                                        item.user
+                                                            ? item.user.avatar
+                                                                ? item.user
+                                                                      .avatar
+                                                                : `http://16.162.235.143:3002/assets/avatarPlaceholder${ Math.floor(Math.random() * 4) + 1}.png`
+                                                            : ''
+                                                    }
                                                     className={
                                                         styles.avatarComment
                                                     }
+                                                    onClick={() => {
+                                                        dispatch(
+                                                            setUserId(
+                                                                userIdPost
+                                                            )
+                                                        )
+                                                        sessionStorage.setItem(
+                                                            'userId',
+                                                            userIdPost
+                                                        )
+                                                    }}
                                                 ></img>
                                             </Link>
                                             <div className={styles.nameAndData}>
@@ -442,13 +468,30 @@ const Insider = () => {
                                                             >
                                                                 <img
                                                                     src={
-                                                                        child
-                                                                            .user
-                                                                            .avatar
+                                                                        child.user
+                                                                            ? child
+                                                                                  .user
+                                                                                  .avatar
+                                                                                ? child
+                                                                                      .user
+                                                                                      .avatar
+                                                                                : `http://16.162.235.143:3002/assets/avatarPlaceholder${ Math.floor(Math.random() * 4) + 1}.png`
+                                                                            : ''
                                                                     }
                                                                     className={
                                                                         styles.avatarComment
                                                                     }
+                                                                    onClick={() => {
+                                                                        dispatch(
+                                                                            setUserId(
+                                                                                userIdPost
+                                                                            )
+                                                                        )
+                                                                        sessionStorage.setItem(
+                                                                            'userId',
+                                                                            userIdPost
+                                                                        )
+                                                                    }}
                                                                 ></img>
                                                                 <div
                                                                     className={
