@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    background-color: #0d0f26;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column-reverse;
+
+    .footer {
+        width: 100%;
+        text-align: center;
+        height: 100px;
+        background-color: #1d1d1d;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 30px;
+        position: relative;
+
+        span {
+            font-size: 25px;
+            padding-left: 50px;
+            color: white;
+        }
+
+        .buttons {
+            color: white;
+            padding-right: 50px;
+            display: flex;
+            font-size: 40px;
+            gap: 60px;
+			align-items: center;
+
+			i {
+				transition: .3s;
+				&:hover {
+					color: rgb(169, 169, 169);
+					cursor: pointer;
+				}
+			}
+
+            .exit {
+				font-size: 30px;
+				background-color: red;
+				padding: 10px;
+				border-radius: 50px;
+				transition: .3s;
+				
+				&:hover {
+					background-color: rgb(178, 0, 0);
+					color: white;
+				}
+            }
+        }
+    }
+}

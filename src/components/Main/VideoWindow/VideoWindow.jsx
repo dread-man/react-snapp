@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './VideoWindow.module.scss'
 import { getVideoChatToken } from '../../../store/video/videoSlice'
-
+import { Link } from 'react-router-dom'
 
 const VideoWindow = () => {
     const dispatch = useDispatch()
@@ -36,9 +36,15 @@ const VideoWindow = () => {
                             )}
                         </div>
                     )}
-                    <button className={styles.joinButton} onClick={() => {dispatch(getVideoChatToken(1688362379))}}>
-                        Join now
-                    </button>
+                    <Link
+                        className={styles.link}
+                        to="/video-chat"
+                        onClick={() => {
+                            dispatch(getVideoChatToken(1688362379))
+                        }}
+                    >
+                        <button className={styles.joinButton}>Join now</button>
+                    </Link>
                 </div>
             )}
         </div>
