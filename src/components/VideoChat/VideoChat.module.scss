@@ -22,6 +22,10 @@
             color: white;
         }
 
+		.link {
+			all: unset;
+		}
+
         .buttons {
             color: white;
             padding-right: 50px;
@@ -38,8 +42,21 @@
 				}
 			}
 
+			// .offMicro {
+			// 	font-size: 40px;
+			// 	background-color: rgb(255, 255, 255);
+			// 	color: #0d0f26;
+			// 	padding: 10px;
+			// 	border-radius: 50px;
+			// 	transition: .3s;
+
+			// 	&:hover {
+			// 		color: #0d0f26;
+			// 	}
+			// }
+
             .exit {
-				font-size: 30px;
+				font-size: 40px;
 				background-color: red;
 				padding: 10px;
 				border-radius: 50px;
