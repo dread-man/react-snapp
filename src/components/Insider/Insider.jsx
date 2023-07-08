@@ -132,7 +132,7 @@ const Insider = () => {
         const data = {
             postId: postIdRender.id,
             content: inputValue,
-        }
+        } 
 
         dispatch(sendComment(data))
         setInputValue('')
@@ -144,7 +144,7 @@ const Insider = () => {
 
     const [edit, setEdit] = useState(false)
     console.log(postIdRender)
-    // console.log(postComments)
+
 
     return (
         <div className={styles.insider}>

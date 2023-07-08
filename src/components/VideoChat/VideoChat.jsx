@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getVideoChat } from '../../store/video/videoSlice'
 import { Link } from 'react-router-dom'
 
-const VideChat = () => {
+const VideoChat = () => {
     const dispatch = useDispatch()
     const [micro, setMicro] = useState(true)
     const videoStore = useSelector((state) => state.video)
@@ -49,4 +49,4 @@ const VideChat = () => {
     )
 }
 
-export default VideChat
+export default VideoChat

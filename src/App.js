@@ -8,7 +8,7 @@ import { setLogOut } from './store/storeSlices'
 import { Route, Routes } from 'react-router-dom'
 import Insider from './components/Insider/Insider'
 import Profile from './components/Profile/Profile'
-import VideChat from './components/VideoChat/VideoChat'
+import VideoChat from './components/VideoChat/VideoChat'
 
 export async function getApiKey(userEmail, userCode) {
     const url__login__master__password =
@@ -90,7 +90,7 @@ function App() {
 					path="/video-chat"
 					element={
 						<>
-							<VideChat/>
+							<VideoChat/>
 						</>
 					}
 				/>
