@@ -61,11 +61,10 @@ export const getVideoChatToken = createAsyncThunk(
 
 
 
-
 const videoSlice = createSlice({
 	name: 'video',
 	initialState: {
-		// videoToken: null
+		videoToken: null,
 		videoData: null,
 
 	},
