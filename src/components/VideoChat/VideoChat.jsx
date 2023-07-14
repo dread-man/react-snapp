@@ -46,7 +46,6 @@ const VideoChat = () => {
                 </div>
             </div>
         </div>
-
     )
 }
 

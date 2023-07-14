@@ -24,6 +24,7 @@ import User from './User/User'
 
 import { setUserId } from '../../store/user/userSlice'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const Insider = () => {
     window.scrollTo(0, 0)
@@ -31,6 +32,8 @@ const Insider = () => {
     const feedStore = useSelector((state) => state.feed)
     const authStore = useSelector((state) => state.auth)
     const insiderStore = useSelector((state) => state.insider)
+
+	const navigate = useNavigate()
 
     sessionStorage.removeItem('userId')
 
@@ -60,6 +63,7 @@ const Insider = () => {
         if (savedPostId) {
             dispatch(setPostId(savedPostId))
         }
+		
 
         dispatch(getPostById(savedPostId))
         dispatch(getCommentsByPostId(savedPostId))
@@ -143,7 +147,14 @@ const Insider = () => {
     }
 
     const [edit, setEdit] = useState(false)
-    console.log(postIdRender)
+    // console.log(postIdRender)
+
+
+	useEffect(() => {
+		if(typeof postIdRender === 'object' ) {
+			navigate(-1)
+		}
+	}, [postIdRender])
 
 
     return (

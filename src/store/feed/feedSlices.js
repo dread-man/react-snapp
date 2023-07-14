@@ -23,7 +23,7 @@ export const getConfig = createAsyncThunk(
         } catch (error) {
             return rejectWithValue(error.message)
         }
-    }
+    },
 )
 
 export const getMe = createAsyncThunk(
@@ -49,7 +49,7 @@ export const getMe = createAsyncThunk(
         } catch (error) {
             return rejectWithValue(error.message)
         }
-    }
+    },
 )
 
 export const getPosts = createAsyncThunk(
@@ -80,7 +80,7 @@ export const getPosts = createAsyncThunk(
 
             const response = await fetch(
                 `${url__post}?${params.toString()}`,
-                requestOptions
+                requestOptions,
             )
             if (!response.ok) {
                 throw new Error('Error post')
@@ -91,7 +91,7 @@ export const getPosts = createAsyncThunk(
         } catch (error) {
             return rejectWithValue(error.message)
         }
-    }
+    },
 )
 
 export const getPostsByPage = createAsyncThunk(
@@ -115,7 +115,7 @@ export const getPostsByPage = createAsyncThunk(
         try {
             const response = await fetch(
                 `${url__post}?${params.toString()}`,
-                requestOptions
+                requestOptions,
             )
             if (!response.ok) {
                 throw new Error('Error post by page')
@@ -125,7 +125,7 @@ export const getPostsByPage = createAsyncThunk(
         } catch (error) {
             rejectWithValue(error.message)
         }
-    }
+    },
 )
 
 export const getPostById = createAsyncThunk(
@@ -144,15 +144,15 @@ export const getPostById = createAsyncThunk(
         try {
             const response = await fetch(url__post__value, requestOptions)
             if (!response.ok) {
+                window.location.reload() // fix error with empty object
                 throw new Error('Error post by id')
             }
-
             const data = await response.json()
             return data
         } catch (error) {
             rejectWithValue(error.message)
         }
-    }
+    },
 )
 
 export const getCommentsByPostId = createAsyncThunk(
@@ -179,10 +179,8 @@ export const getCommentsByPostId = createAsyncThunk(
         } catch (error) {
             rejectWithValue(error.message)
         }
-    }
+    },
 )
-
-
 
 const feedSlice = createSlice({
     name: 'feed',
@@ -197,9 +195,9 @@ const feedSlice = createSlice({
         postId: null,
         postIdRender: {},
 
-		postComments: null,
+        postComments: null,
 
-		videoData: null,
+        videoData: null,
     },
     reducers: {
         setCategoryId: (state, action) => {
@@ -237,10 +235,9 @@ const feedSlice = createSlice({
         [getPostById.fulfilled]: (state, action) => {
             state.postIdRender = action.payload
         },
-		[getCommentsByPostId.fulfilled]: (state, action) => {
-			state.postComments = [...action.payload.items]
-		},
-		
+        [getCommentsByPostId.fulfilled]: (state, action) => {
+            state.postComments = [...action.payload.items]
+        },
     },
 })
 

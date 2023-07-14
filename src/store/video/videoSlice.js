@@ -16,6 +16,7 @@ export const getVideoChat = createAsyncThunk(
 		try {
             const response = await fetch(url__video__chat, requestOptions)
             if (!response.ok) {
+				
                 throw new Error('Error video chat')
             }
 
@@ -51,15 +52,11 @@ export const getVideoChatToken = createAsyncThunk(
 
 			localStorage.setItem('VideoChatToken', data.access_token)
 
-
 		} catch (error) {
 			rejectWithValue(error.message)
 		}
 	}
 )
-
-
-
 
 const videoSlice = createSlice({
 	name: 'video',
