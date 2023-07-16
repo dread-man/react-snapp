@@ -24,7 +24,7 @@ import User from './User/User'
 
 import { setUserId } from '../../store/user/userSlice'
 import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 const Insider = () => {
     window.scrollTo(0, 0)
@@ -33,7 +33,7 @@ const Insider = () => {
     const authStore = useSelector((state) => state.auth)
     const insiderStore = useSelector((state) => state.insider)
 
-	const navigate = useNavigate()
+    const navigate = useNavigate()
 
     sessionStorage.removeItem('userId')
 
@@ -63,7 +63,6 @@ const Insider = () => {
         if (savedPostId) {
             dispatch(setPostId(savedPostId))
         }
-		
 
         dispatch(getPostById(savedPostId))
         dispatch(getCommentsByPostId(savedPostId))
@@ -109,7 +108,7 @@ const Insider = () => {
     let tags = []
     if (postIdRender.tags) {
         tags = Object.keys(postIdRender.tags).map(
-            (item) => `#${postIdRender.tags[item]} `
+            (item) => `#${postIdRender.tags[item]} `,
         )
     }
 
@@ -136,7 +135,7 @@ const Insider = () => {
         const data = {
             postId: postIdRender.id,
             content: inputValue,
-        } 
+        }
 
         dispatch(sendComment(data))
         setInputValue('')
@@ -149,13 +148,11 @@ const Insider = () => {
     const [edit, setEdit] = useState(false)
     // console.log(postIdRender)
 
-
-	useEffect(() => {
-		if(typeof postIdRender === 'object' ) {
-			navigate(-1)
-		}
-	}, [postIdRender])
-
+    useEffect(() => {
+        if (typeof postIdRender === 'object') {
+            navigate('/')
+        }
+    }, [postIdRender])
 
     return (
         <div className={styles.insider}>
@@ -175,7 +172,11 @@ const Insider = () => {
                                     postIdRender.user
                                         ? postIdRender.user.avatar
                                             ? postIdRender.user.avatar
-                                            : `http://16.162.235.143:3002/assets/avatarPlaceholder${ Math.floor(Math.random() * 4) + 1}.png`
+                                            : `http://16.162.235.143:3002/assets/avatarPlaceholder${
+                                                  Math.floor(
+                                                      Math.random() * 4,
+                                                  ) + 1
+                                              }.png`
                                         : ''
                                 }
                                 className={styles.avatar}
@@ -199,7 +200,7 @@ const Insider = () => {
                                         dispatch(setUserId(userIdPost))
                                         sessionStorage.setItem(
                                             'userId',
-                                            userIdPost
+                                            userIdPost,
                                         )
                                     }}
                                 >
@@ -209,7 +210,7 @@ const Insider = () => {
 
                             <h3 className={styles.data}>
                                 {new Date(
-                                    postIdRender.createdAt
+                                    postIdRender.createdAt,
                                 ).toLocaleString('en-US', {
                                     month: 'short',
                                     day: 'numeric',
@@ -269,11 +270,11 @@ const Insider = () => {
                                                 to={`/profile`}
                                                 onClick={() => {
                                                     dispatch(
-                                                        setUserId(userIdPost)
+                                                        setUserId(userIdPost),
                                                     )
                                                     sessionStorage.setItem(
                                                         'userId',
-                                                        item.user.id
+                                                        item.user.id,
                                                     )
                                                 }}
                                             >
@@ -283,7 +284,12 @@ const Insider = () => {
                                                             ? item.user.avatar
                                                                 ? item.user
                                                                       .avatar
-                                                                : `http://16.162.235.143:3002/assets/avatarPlaceholder${ Math.floor(Math.random() * 4) + 1}.png`
+                                                                : `http://16.162.235.143:3002/assets/avatarPlaceholder${
+                                                                      Math.floor(
+                                                                          Math.random() *
+                                                                              4,
+                                                                      ) + 1
+                                                                  }.png`
                                                             : ''
                                                     }
                                                     className={
@@ -292,12 +298,12 @@ const Insider = () => {
                                                     onClick={() => {
                                                         dispatch(
                                                             setUserId(
-                                                                userIdPost
-                                                            )
+                                                                userIdPost,
+                                                            ),
                                                         )
                                                         sessionStorage.setItem(
                                                             'userId',
-                                                            userIdPost
+                                                            userIdPost,
                                                         )
                                                     }}
                                                 ></img>
@@ -310,12 +316,12 @@ const Insider = () => {
                                                     onClick={() => {
                                                         dispatch(
                                                             setUserId(
-                                                                userIdPost
-                                                            )
+                                                                userIdPost,
+                                                            ),
                                                         )
                                                         sessionStorage.setItem(
                                                             'userId',
-                                                            item.user.id
+                                                            item.user.id,
                                                         )
                                                     }}
                                                 >
@@ -360,14 +366,14 @@ const Insider = () => {
                                                                 onClick={() => {
                                                                     dispatch(
                                                                         deleteComment(
-                                                                            item.id
-                                                                        )
+                                                                            item.id,
+                                                                        ),
                                                                     )
                                                                     setInterval(
                                                                         () => {
                                                                             window.location.reload()
                                                                         },
-                                                                        500
+                                                                        500,
                                                                     )
                                                                 }}
                                                             >
@@ -419,19 +425,12 @@ const Insider = () => {
                                         <div className={styles.replyContainer}>
                                             <h3 className={styles.data}>
                                                 {new Date(
-                                                    item.createdAt
+                                                    item.createdAt,
                                                 ).toLocaleString('en-US', {
                                                     month: 'short',
                                                     day: 'numeric',
                                                 })}
                                             </h3>
-
-                                            {/* <button
-                                                className={styles.commentReply}
-
-                                            >
-                                                Reply
-                                            </button> */}
                                         </div>
                                     </div>
 
@@ -466,14 +465,14 @@ const Insider = () => {
                                                                 onClick={() => {
                                                                     dispatch(
                                                                         setUserId(
-                                                                            userIdPost
-                                                                        )
+                                                                            userIdPost,
+                                                                        ),
                                                                     )
                                                                     sessionStorage.setItem(
                                                                         'userId',
                                                                         child
                                                                             .user
-                                                                            .id
+                                                                            .id,
                                                                     )
                                                                 }}
                                                             >
@@ -486,7 +485,13 @@ const Insider = () => {
                                                                                 ? child
                                                                                       .user
                                                                                       .avatar
-                                                                                : `http://16.162.235.143:3002/assets/avatarPlaceholder${ Math.floor(Math.random() * 4) + 1}.png`
+                                                                                : `http://16.162.235.143:3002/assets/avatarPlaceholder${
+                                                                                      Math.floor(
+                                                                                          Math.random() *
+                                                                                              4,
+                                                                                      ) +
+                                                                                      1
+                                                                                  }.png`
                                                                             : ''
                                                                     }
                                                                     className={
@@ -495,12 +500,12 @@ const Insider = () => {
                                                                     onClick={() => {
                                                                         dispatch(
                                                                             setUserId(
-                                                                                userIdPost
-                                                                            )
+                                                                                userIdPost,
+                                                                            ),
                                                                         )
                                                                         sessionStorage.setItem(
                                                                             'userId',
-                                                                            userIdPost
+                                                                            userIdPost,
                                                                         )
                                                                     }}
                                                                 ></img>
@@ -553,13 +558,13 @@ const Insider = () => {
                                                                 }
                                                             >
                                                                 {new Date(
-                                                                    child.createdAt
+                                                                    child.createdAt,
                                                                 ).toLocaleString(
                                                                     'en-US',
                                                                     {
                                                                         month: 'short',
                                                                         day: 'numeric',
-                                                                    }
+                                                                    },
                                                                 )}
                                                             </h3>
 

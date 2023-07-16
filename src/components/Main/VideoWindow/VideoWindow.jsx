@@ -32,7 +32,7 @@ const VideoWindow = () => {
                                     hour: 'numeric',
                                     minute: 'numeric',
                                     hour12: true,
-                                }
+                                },
                             )}
                         </div>
                     )}
